@@ -1,13 +1,13 @@
-package com.nebula.http;
+package com.nebula.http.HttpRequest;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.Exceptions.RequestLineParserException;
+import com.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
 import com.nebula.Http.HttpRequest.Request;
-import com.nebula.Http.Parser.HttpParser;
+import com.nebula.Http.HttpRequest.Parser.HttpParser;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
