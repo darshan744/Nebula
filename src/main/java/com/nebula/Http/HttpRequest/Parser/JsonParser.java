@@ -1,4 +1,4 @@
-package com.nebula.Http.Parser;
+package com.nebula.Http.HttpRequest.Parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

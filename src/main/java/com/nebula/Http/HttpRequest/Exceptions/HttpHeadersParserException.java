@@ -1,4 +1,4 @@
-package com.nebula.Http.Exceptions;
+package com.nebula.Http.HttpRequest.Exceptions;
 
 public class HttpHeadersParserException extends HttpParserException {
 

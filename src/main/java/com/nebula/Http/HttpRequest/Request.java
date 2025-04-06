@@ -1,4 +1,4 @@
-package com.nebula.Http;
+package com.nebula.Http.HttpRequest;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

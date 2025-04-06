@@ -5,9 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.nebula.Http.Exceptions.HttpParserException;
-import com.nebula.Http.Parser.HttpParser;
-import com.nebula.Http.Request;
+import com.nebula.Http.HttpRequest.Parser.HttpParser;
+import com.nebula.Http.HttpRequest.Request;
 
 public class HttpWorkerThread extends Thread{
     
@@ -29,8 +28,8 @@ public class HttpWorkerThread extends Thread{
             while((_byte = ioInputStream.read()) != -1) {
                 System.out.print((char)_byte);
             }
-            HttpParser parser = new HttpParser();
-           //Request request = parser.parseHttpRequest(ioInputStream);
+            //HttpParser parser = new HttpParser();
+            //Request request = parser.parseHttpRequest(ioInputStream);
             
             String html = "<html><head><title>Java Server</title></head><body>Hi this is java server page written code</body></html>";
              

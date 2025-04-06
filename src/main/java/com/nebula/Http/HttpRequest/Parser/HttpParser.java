@@ -1,18 +1,17 @@
-package com.nebula.Http.Parser;
+package com.nebula.Http.HttpRequest.Parser;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.Exceptions.HttpBodyParserException;
-import com.nebula.Http.Exceptions.HttpHeadersParserException;
-import com.nebula.Http.Request;
+import com.nebula.Http.HttpRequest.Exceptions.HttpBodyParserException;
+import com.nebula.Http.HttpRequest.Exceptions.HttpHeadersParserException;
+import com.nebula.Http.HttpRequest.Exceptions.HttpParserException;
+import com.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
 import com.nebula.Http.Constants.HttpMethod;
-import com.nebula.Http.Exceptions.HttpParserException;
-import com.nebula.Http.Exceptions.RequestLineParserException;
+import com.nebula.Http.Constants.HttpVersion;
+import com.nebula.Http.HttpRequest.Request;
 
 public class HttpParser {
     private final int CR = 13; // \r

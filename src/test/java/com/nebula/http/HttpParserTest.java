@@ -6,9 +6,9 @@ import java.io.InputStream;
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpVersion;
 import com.nebula.Http.Exceptions.RequestLineParserException;
-import com.nebula.Http.Request;
-
+import com.nebula.Http.HttpRequest.Request;
 import com.nebula.Http.Parser.HttpParser;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +21,9 @@ public class HttpParserTest {
     public static void beforeAll() {
         httpParser = new HttpParser();
     }
-    
+    /**
+     * PARSING TEST FOR REQUEST LINE
+     */
     @Test
     public void parseHttpRequestLine() {
        Request request = httpParser.parseHttpRequest(testCase());
@@ -36,10 +38,14 @@ public class HttpParserTest {
         assertEquals(HttpVersion.HTTP_V1 , request.getHttpVersion());
         assertNotNull(request.getUrl());
     }
+    /**
+     * BAD REQUEST TEST CASE
+     */
     @Test
     public void parseHttRequestWithBadTest() {
        assertThrows(RequestLineParserException.class , ()->httpParser.parseHttpRequestLine(badTestCaseWithCRNoLF() , new Request()));
     }
+
     @Test
     public void parseHttpRequestWithBody() {
         Request request = httpParser.parseHttpRequest(testCaseWithActualBody());
