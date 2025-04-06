@@ -11,21 +11,22 @@ public class ServerListener extends Thread {
    public ServerListener(int port) throws IOException {
         this.port = port;
         this.serverSocket = new ServerSocket(port);
+        System.out.println("Server listening in : " + port);
     }
 
     @Override
     public void run() {
+        Socket socket = null;
         while(serverSocket.isBound() && !serverSocket.isClosed()) {
             try {
-                Socket socket = serverSocket.accept();
+                socket = serverSocket.accept();
                 System.out.println(" Connection accepted" + serverSocket.getInetAddress());
-
                 HttpWorkerThread httpWorkerThread = new HttpWorkerThread(socket);
                 httpWorkerThread.start();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            
         }
     }
 
