@@ -6,12 +6,12 @@ import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
 
 /**
- * This is the final response Body
- * The building and managing of the response body is done using
- * HttpResponseBuilder Class
- * The dev can also use this class if they wish to have a fine grained control
- * Then its the Dev's duty to handle the headers as whole
- * 
+ * <ul>
+ * <li>This is the final response Body
+ * <li>The building and managing of the response body is done using HttpResponseBuilder Class
+ * <li>The dev can also use this class if they wish to have a fine grained control
+ * <li>Then its the Dev's duty to handle the headers as whole
+ * </ul>
  */
 public final class Response {
 
@@ -20,9 +20,6 @@ public final class Response {
     private HashMap<String, String> headers = new HashMap<>();
     private Object contentBody = null;
 
-    public String getCRLF() {
-        return CRLF;
-    }
 
     public HashMap<String, String> getHeaders() {
         return headers;
@@ -69,7 +66,6 @@ public final class Response {
         if(contentBody != null) {
             //TODO JSONify the contentBody 
             //and then add
-
             response.append(contentBody.toString());
         }
         return response.toString().getBytes();

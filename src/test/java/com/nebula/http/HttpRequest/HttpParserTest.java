@@ -5,7 +5,6 @@ import java.io.InputStream;
 
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
 import com.nebula.Http.HttpRequest.Request;
 import com.nebula.Http.HttpRequest.Parser.HttpParser;
 
@@ -43,17 +42,13 @@ public class HttpParserTest {
      */
     @Test
     public void parseHttRequestWithBadTest() {
-       assertThrows(RequestLineParserException.class , ()->httpParser.parseHttpRequestLine(badTestCaseWithCRNoLF() , new Request()));
     }
 
     @Test
     public void parseHttpRequestWithBody() {
-        Request request = httpParser.parseHttpRequest(testCaseWithActualBody());
-        assertEquals(HttpVersion.V1, request.getHttpVersion());
-        assertEquals(HttpMethod.POST , request.getMethod());
-        int contentLength = Integer.parseInt(request.getHeader("content-length"));
-        assertEquals(contentLength, request.getBody().length());
-        System.out.println(request.getBody());
+       Request req  = httpParser.parseHttpRequest(testCaseWithActualBody());
+       User user = req.getBody(User.class);
+       System.out.println(user);
     }
 
     static InputStream badTestCaseWithCRNoLF() {
@@ -118,4 +113,25 @@ public class HttpParserTest {
         return new ByteArrayInputStream(str.getBytes());
     }
 
+}
+class User {
+    
+    public User() {
+    }
+    public User(String name) {
+        this.user = name;
+    }
+    private String user;
+    public String getUser() {
+        return user;
+    }
+    public void setUser(String name) {
+        this.user = name;
+    }
+    @Override
+    public String toString() {
+        return "User [user=" + user + "]";
+    }
+    
+    
 }

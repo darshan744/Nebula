@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import com.nebula.Http.HttpRequest.Request;
+import com.nebula.Http.HttpRequest.Parser.HttpParser;
+
 public class HttpWorkerThread extends Thread{
     
     private Socket socket = null;
@@ -13,7 +16,6 @@ public class HttpWorkerThread extends Thread{
     }
     @Override
     public void run() {
-       final String CRLF = "\n\r";
        InputStream ioInputStream = null;
        OutputStream outputStream = null;
         try {
@@ -21,16 +23,9 @@ public class HttpWorkerThread extends Thread{
             ioInputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
 
+            HttpParser parser = new HttpParser();
+            Request req = parser.parseHttpRequest(ioInputStream);
             
-            //HttpParser parser = new HttpParser();
-            //Request request = parser.parseHttpRequest(ioInputStream);
-            
-            String html = "<html><head><title>Java Server</title></head><body>Hi this is java server page written code</body></html>";
-            
-            String response = "HTTP/1.1 200 OK" + CRLF
-                + "Content-Length: "+ html.getBytes().length + CRLF + CRLF + html + CRLF + CRLF;
-            outputStream.write(response.getBytes());
-            System.out.println("Response sent");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

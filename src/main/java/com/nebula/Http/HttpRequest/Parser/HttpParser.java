@@ -18,6 +18,7 @@ public class HttpParser {
     private final int LF = 10; // \n
     private final int SP = 32; // space
 
+
     public Request parseHttpRequest(InputStream requestInputStream) {
         Request request = new Request();
         try {
@@ -35,7 +36,7 @@ public class HttpParser {
         return request;
     }
 
-    public void parseHttpRequestLine(InputStream requestInputStream, Request request)
+    private void parseHttpRequestLine(InputStream requestInputStream, Request request)
             throws IOException, RequestLineParserException {
         int _byte;
         StringBuilder stringBuilder = new StringBuilder();
@@ -108,7 +109,6 @@ public class HttpParser {
 
             bytes.add(_int);
         }
-        System.out.println(bytes);
         if (bytes.size() != contentLength) {
             throw new HttpBodyParserException("Invalid Content Length");
         }
@@ -166,4 +166,5 @@ public class HttpParser {
             }
         }
     }
+
 }

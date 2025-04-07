@@ -3,21 +3,22 @@ package com.nebula.Http.HttpRequest;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
+import com.nebula.Http.HttpRequest.Parser.JsonParser;
 
 /**
  * @apiNote
  * REQUEST BODY FOR HTTP
- *
- * ->Contains -> HTTP Method , HTTP Version , Route , Body , Headers (As map) 
+ *<ul>
+ * Contains <li> HTTP Method <li> HTTP Version <li> Route <li> Body <li> Headers (As map) 
+ <ul>
  */
 public class Request {
-
-
    
-    //TODO : Implement for Request Body;
+    private final JsonParser jsonParser = new JsonParser();
     private String body;
     private HttpMethod method;
     private HttpStatus status;
@@ -79,6 +80,19 @@ public class Request {
         return body;
     }
 
+    /**
+     * @param clazz mapp object to that class
+     * @return either the parsed object or null if error occured;
+     */
+    public <T> T getBody(Class<T> clazz) {
+        try {
+            return jsonParser.getObjectOfTheBody(getBody(), clazz);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public void setBody(String body) {
         this.body = body;
     }
@@ -86,7 +100,6 @@ public class Request {
     public String getHeader(String header) {
         return this.headers.get(header.toLowerCase());
     }
-
     @Override
     public String toString() {
         return "Request{" +
