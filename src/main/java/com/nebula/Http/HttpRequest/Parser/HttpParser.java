@@ -120,10 +120,10 @@ public class HttpParser {
 
     private void resolveHttpVersion(String version, Request request) throws RequestLineParserException {
         HttpVersion httpVersion;
-        if (version.equals(HttpVersion.HTTP_V1.getVersion())) {
-            httpVersion = HttpVersion.HTTP_V1;
-        } else if (version.equals(HttpVersion.HTTP_V2.getVersion())) {
-            httpVersion = HttpVersion.HTTP_V2;
+        if (version.equals(HttpVersion.V1.getVersion())) {
+            httpVersion = HttpVersion.V1;
+        } else if (version.equals(HttpVersion.V2.getVersion())) {
+            httpVersion = HttpVersion.V2;
         } else {
             throw new RequestLineParserException("Invalid Protocol Version");
         }

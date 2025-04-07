@@ -1,82 +1,77 @@
 package com.nebula.Http.HttpResponse;
 
-import com.nebula.Http.Constants.ContentType;
+import java.util.HashMap;
+
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
 
-public class Response {
-    
+/**
+ * This is the final response Body
+ * The building and managing of the response body is done using
+ * HttpResponseBuilder Class
+ * The dev can also use this class if they wish to have a fine grained control
+ * Then its the Dev's duty to handle the headers as whole
+ * 
+ */
+public final class Response {
+
     private final String CRLF = "\r\n";
+    private HttpStatus status;
+    private HashMap<String, String> headers = new HashMap<>();
+    private Object contentBody = null;
 
-    private HttpVersion httpVersion;
-
-    private HttpStatus statusCode;
-
-    private ContentType contentType;
-
-    private int contentLength;
-
-    public int getContentLength() {
-        return contentLength;
+    public String getCRLF() {
+        return CRLF;
     }
 
-    public void setContentLength(int contentLength) {
-        this.contentLength = contentLength;
+    public HashMap<String, String> getHeaders() {
+        return headers;
     }
 
-    public ContentType getContentType() {
-        return contentType;
+    public void setHeaders(HashMap<String, String> headers) {
+        this.headers = headers;
     }
 
-    public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
+    public Object getContentBody() {
+        return contentBody;
     }
 
-    public HttpVersion getHttpVersion() {
-        return httpVersion;
+    public void setContentBody(Object contentBody) {
+        this.contentBody = contentBody;
     }
 
-    public void setHttpVersion(HttpVersion httpVersion) {
-        this.httpVersion = httpVersion;
+    public HttpStatus getStatus() {
+        return status;
     }
 
-    public HttpStatus getStatusCode() {
-        return statusCode;
+    public void setStatus(HttpStatus status) {
+        this.status = status;
     }
 
-    public void setStatusCode(HttpStatus statusCode) {
-        this.statusCode = statusCode;
-    }
+    public byte[] getBytes() {
+        StringBuilder statusLine = new StringBuilder();
+        statusLine.append(HttpVersion.V1.getVersion())
+                .append(" ")
+                .append(getStatus().getStatusCode())
+                .append(" ")
+                .append(getStatus().getMessage())
+                .append(CRLF);
+        
+        // Headers as a string 
+        StringBuilder headers = new StringBuilder();
+        getHeaders().forEach(
+            (key , value) -> headers.append(key).append(": ").append(value).append(CRLF)
+        );
+        headers.append(CRLF);
+        headers.append(CRLF);
+        StringBuilder response = new StringBuilder();
+        response.append(statusLine).append(headers);
+        if(contentBody != null) {
+            //TODO JSONify the contentBody 
+            //and then add
 
-    public void createHttpResponse() {
-       
-    }
-
-    public String createDefaultHeaders() {
-        String contentType = String.format("Content-Type: %s",ContentType.JSON.getContentType());
-        String contentLength = "";
-        if(getContentLength() > 0) {
-            contentLength = String.format("Content-Length: %s",getContentLength());
+            response.append(contentBody.toString());
         }
-        String server = "Server: Nebula";
-        String connection = "Connection: close";
-        StringBuilder responseBuilder = new StringBuilder();
-        responseBuilder.append(contentType).append(CRLF);
-        if(!contentLength.isBlank()) {
-            responseBuilder.append(contentLength);
-            responseBuilder.append(CRLF);
-        }
-        responseBuilder.append(server);
-        responseBuilder.append(CRLF);
-        responseBuilder.append(connection);
-        responseBuilder.append(CRLF);
-        responseBuilder.append(CRLF);
-        return responseBuilder.toString();
+        return response.toString().getBytes();
     }
-
-    public String createResponseLine() {
-        String requestLine = String.format("%s %d %s \r\n",getHttpVersion().getVersion() , getStatusCode().getStatusCode() , getStatusCode().getMessage());
-        return requestLine;
-    }
-
 }

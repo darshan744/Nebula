@@ -28,14 +28,14 @@ public class HttpParserTest {
     public void parseHttpRequestLine() {
        Request request = httpParser.parseHttpRequest(testCase());
        assertEquals(HttpMethod.GET , request.getMethod());
-       assertEquals(HttpVersion.HTTP_V1 , request.getHttpVersion());
+       assertEquals(HttpVersion.V1 , request.getHttpVersion());
        assertNotNull(request.getUrl());
     }
     @Test
     public void parseHttpRequestLineWithBody() {
         Request request = httpParser.parseHttpRequest(testCaseWithBody());
         assertEquals(HttpMethod.POST , request.getMethod());
-        assertEquals(HttpVersion.HTTP_V1 , request.getHttpVersion());
+        assertEquals(HttpVersion.V1 , request.getHttpVersion());
         assertNotNull(request.getUrl());
     }
     /**
@@ -49,7 +49,7 @@ public class HttpParserTest {
     @Test
     public void parseHttpRequestWithBody() {
         Request request = httpParser.parseHttpRequest(testCaseWithActualBody());
-        assertEquals(HttpVersion.HTTP_V1, request.getHttpVersion());
+        assertEquals(HttpVersion.V1, request.getHttpVersion());
         assertEquals(HttpMethod.POST , request.getMethod());
         int contentLength = Integer.parseInt(request.getHeader("content-length"));
         assertEquals(contentLength, request.getBody().length());
