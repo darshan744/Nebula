@@ -29,7 +29,7 @@ public class RequestDispatcher {
         HashMap<String, RequestHandler> routesForMethod = router.getMethodRoutes(method);
         // incase no such route is declared for execution -> throws
         // RouteNotFoundException
-        if (!routesForMethod.containsKey(route)) {
+        if (routesForMethod == null || !routesForMethod.containsKey(route)) {
             throw new RouteNotFoundException("No Route is registered for `Route : " + route + "`");
         }
         RequestHandler requestHandler = routesForMethod.get(route);
@@ -51,9 +51,11 @@ public class RequestDispatcher {
 
     public Response handleRequest(InputStream ioInputStream) {
         // parser for inputStream
+        logger.info("Before Parser");
         HttpParser parser = new HttpParser();
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         Request req = parser.parseHttpRequest(ioInputStream);
+        logger.info("After Parser");
         Response res = null;
         MiddlewareChain chain = new MiddlewareChain(registry.getMiddlewares());
         HttpResponseBuilder builder = new HttpResponseBuilder();
@@ -61,6 +63,7 @@ public class RequestDispatcher {
             chain.next(req, builder, chain);
             // forwards to the resultant endpoint handler
             forwardRequest(req , builder);
+            logger.info("Response");
             res = builder.build();
             return res;
         } catch (RequestHandlerNotFoundException requestHandlerNotFoundException) {

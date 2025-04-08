@@ -30,7 +30,7 @@ public class HttpParser {
             if(length != null){
                 int contentLength = Integer.parseInt(length);
                 if(contentLength > 0) {
-                     parseHttpBody(requestInputStream, request, contentLength);
+                    parseHttpBody(requestInputStream, request, contentLength);
                 }
             }
         } catch (HttpParserException httpParserException) {
@@ -105,13 +105,16 @@ public class HttpParser {
     private void parseHttpBody(InputStream requestInputStream, Request request, int contentLength)
             throws HttpBodyParserException, IOException {
         List<Byte> bytes = new ArrayList<>();
-        byte _int = 0;
-        while ((_int = (byte) requestInputStream.read()) != -1) {
-            if (_int == CR) {
-                continue;
-            }
-
-            bytes.add(_int);
+        int rawInt = 0;
+        int i = 0;
+        System.out.println(contentLength);
+        logger.info("Going inside loop");
+        while (i < contentLength) {
+            rawInt = requestInputStream.read();
+            if(rawInt == -1) break;
+            byte b = (byte) rawInt;  // Cast here only if valid
+            bytes.add(b);
+            i++;
         }
         if (bytes.size() != contentLength) {
             throw new HttpBodyParserException("Invalid Content Length");
