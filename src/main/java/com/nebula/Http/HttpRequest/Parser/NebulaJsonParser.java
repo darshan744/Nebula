@@ -6,11 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nebula.Logger.NebulaLogger;
 import com.nebula.Logger.NebulaLoggerFactory;
 
-public class JsonParser {
+public class NebulaJsonParser {
+    
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(JsonParser.class);
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(NebulaJsonParser.class);
+    
     public <T> T getObjectOfTheBody(String requstBodyString , Class<T> clazz) throws JsonMappingException, JsonProcessingException {
         logger.info("Parsing The body to CLASS : " + clazz.getName());
         return objectMapper.readValue(requstBodyString, clazz);
     }
+
+    public String serializeObject(Object obj) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(obj);
+    }
+
 }

@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerListener extends Thread {
+import com.nebula.Logger.NebulaLogger;
+import com.nebula.Logger.NebulaLoggerFactory;
 
+public class ServerListener extends Thread {
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(ServerListener.class);
     private int port;
     private ServerSocket serverSocket = null;
    public ServerListener(int port) throws IOException {
         this.port = port;
         this.serverSocket = new ServerSocket(port);
-        System.out.println("Server listening in : " + port);
+        logger.info("Server Started and Listening in Port " + port);
     }
 
     @Override
@@ -20,8 +23,9 @@ public class ServerListener extends Thread {
         while(serverSocket.isBound() && !serverSocket.isClosed()) {
             try {
                 socket = serverSocket.accept();
-                System.out.println(" Connection accepted" + serverSocket.getInetAddress());
+                logger.info("Connection Recieved : " + socket.getLocalAddress());
                 HttpWorkerThread httpWorkerThread = new HttpWorkerThread(socket);
+                logger.info("Spanning new Thread to handle incoming Request : ThreadID : " + httpWorkerThread.threadId());
                 httpWorkerThread.start();
             } catch (IOException e) {
                 e.printStackTrace();

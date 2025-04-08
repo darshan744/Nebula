@@ -1,9 +1,13 @@
 package com.nebula.Http.HttpResponse;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
+import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 
 /**
  * <ul>
@@ -19,7 +23,8 @@ public final class Response {
     private HttpStatus status;
     private HashMap<String, String> headers = new HashMap<>();
     private Object contentBody = null;
-
+    private String serializedBody = null;
+    private final NebulaJsonParser jsonParser = new NebulaJsonParser();
 
     public HashMap<String, String> getHeaders() {
         return headers;
@@ -33,8 +38,11 @@ public final class Response {
         return contentBody;
     }
 
-    public void setContentBody(Object contentBody) {
+    public int setContentBody(Object contentBody) throws JsonProcessingException {
+        serializedBody = jsonParser.serializeObject(contentBody);
         this.contentBody = contentBody;
+        // System.out.println(Arrays.toString(serializedBody.getBytes()));
+        return serializedBody.getBytes(StandardCharsets.US_ASCII).length;
     }
 
     public HttpStatus getStatus() {
@@ -45,7 +53,8 @@ public final class Response {
         this.status = status;
     }
 
-    public byte[] getBytes() {
+    public byte[] getBytes() throws JsonProcessingException {
+       
         StringBuilder statusLine = new StringBuilder();
         statusLine.append(HttpVersion.V1.getVersion())
                 .append(" ")
@@ -60,14 +69,13 @@ public final class Response {
             (key , value) -> headers.append(key).append(": ").append(value).append(CRLF)
         );
         headers.append(CRLF);
-        headers.append(CRLF);
         StringBuilder response = new StringBuilder();
         response.append(statusLine).append(headers);
-        if(contentBody != null) {
-            //TODO JSONify the contentBody 
-            //and then add
-            response.append(contentBody.toString());
+        if(serializedBody != null) {
+           response.append(serializedBody);
         }
-        return response.toString().getBytes();
+        response.append(CRLF);
+        System.out.println(response);
+        return response.toString().getBytes(StandardCharsets.US_ASCII);
     }
 }

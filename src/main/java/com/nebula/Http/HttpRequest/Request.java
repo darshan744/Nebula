@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.HttpRequest.Parser.JsonParser;
+import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 
 /**
  * @apiNote
@@ -18,7 +18,7 @@ import com.nebula.Http.HttpRequest.Parser.JsonParser;
  */
 public class Request {
    
-    private final JsonParser jsonParser = new JsonParser();
+    private final NebulaJsonParser jsonParser = new NebulaJsonParser();
     private String body;
     private HttpMethod method;
     private HttpStatus status;

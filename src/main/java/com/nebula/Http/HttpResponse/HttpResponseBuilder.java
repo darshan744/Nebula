@@ -2,6 +2,7 @@ package com.nebula.Http.HttpResponse;
 
 import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nebula.Http.Constants.ContentType;
 import com.nebula.Http.Constants.HttpStatus;
 
@@ -34,9 +35,13 @@ public class HttpResponseBuilder {
         return this;
     }
 
-    public HttpResponseBuilder addBody(Object body) {
-        response.setContentBody(body);
-        addHeader(Headers.CONTENT_LENGTH, String.valueOf(body.toString().getBytes().length));
+    public HttpResponseBuilder addBody(Object body){
+        try {
+           int contentLength = response.setContentBody(body);
+            addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

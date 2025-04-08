@@ -26,10 +26,13 @@ public class HttpParser {
         try {
             parseHttpRequestLine(requestInputStream, request);
             parseHttpHeaders(requestInputStream, request);
-            int contentLength = Integer.parseInt(request.getHeader("content-length"));
-            if(contentLength > 0) {
-                logger.info("Body Found");
-                 parseHttpBody(requestInputStream, request, contentLength);
+            String length = request.getHeader("content-length");
+            if(length != null){
+                int contentLength = Integer.parseInt(length);
+                if(contentLength > 0) {
+                    logger.info("Body Found");
+                     parseHttpBody(requestInputStream, request, contentLength);
+                }
             }
         } catch (HttpParserException httpParserException) {
             logger.severe(httpParserException.getMessage());
