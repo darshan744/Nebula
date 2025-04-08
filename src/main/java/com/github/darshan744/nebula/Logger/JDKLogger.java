@@ -2,10 +2,13 @@ package com.nebula.Logger;
 
 import java.util.logging.Logger;
 
+/**
+ * Custom logger implements NebulaLogger
+ * Wrapper around JUL
+ * So that we can also change the logger whenever necessary
+ */
 class JDKLogger implements NebulaLogger {
-
     private Logger logger = null;
-
     JDKLogger(Class<?> clazz) {
         this.logger = Logger.getLogger(clazz.getName());
     }

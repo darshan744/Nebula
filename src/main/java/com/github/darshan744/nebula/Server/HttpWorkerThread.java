@@ -18,10 +18,15 @@ public class HttpWorkerThread extends Thread{
        InputStream ioInputStream = null;
        OutputStream outputStream = null;
         try {
+            //input HTTP request as stream 
             ioInputStream = socket.getInputStream();
+            //for writing our response 
             outputStream = socket.getOutputStream();
+            // Request Handler
             RequestDispatcher dispatcher = new RequestDispatcher();
+            //converts stream to Request Object and handle the registered url
             Response res = dispatcher.handleRequest(ioInputStream);
+            // to send our recieved resposne
             outputStream.write(res.getBytes());
         } catch (IOException e) {
             e.printStackTrace();

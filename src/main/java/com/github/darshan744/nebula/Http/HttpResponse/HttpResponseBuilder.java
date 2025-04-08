@@ -38,7 +38,7 @@ public class HttpResponseBuilder {
     public HttpResponseBuilder addBody(Object body){
         try {
            int contentLength = response.setContentBody(body);
-            addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
+           addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
