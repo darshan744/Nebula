@@ -1,15 +1,15 @@
-package com.nebula.Http.HttpRequest;
+package com.github.darshan744.nebula.Http.HttpRequest;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.nebula.Http.Constants.HttpMethod;
-import com.nebula.Http.Constants.HttpStatus;
-import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
+import com.github.darshan744.nebula.Http.Constants.HttpMethod;
+import com.github.darshan744.nebula.Http.Constants.HttpStatus;
+import com.github.darshan744.nebula.Http.Constants.HttpVersion;
+import com.github.darshan744.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
+import com.github.darshan744.nebula.Logger.NebulaLogger;
+import com.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 /**
  * @apiNote

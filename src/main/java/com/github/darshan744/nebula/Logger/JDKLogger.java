@@ -1,4 +1,4 @@
-package com.nebula.Logger;
+package com.github.darshan744.nebula.Logger;
 
 import java.util.logging.Logger;
 

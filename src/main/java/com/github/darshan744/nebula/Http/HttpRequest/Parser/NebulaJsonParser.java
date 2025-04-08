@@ -1,4 +1,4 @@
-package com.nebula.Http.HttpRequest.Parser;
+package com.github.darshan744.nebula.Http.HttpRequest.Parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

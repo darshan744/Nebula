@@ -1,12 +1,12 @@
-package com.nebula.Server;
+package com.github.darshan744.nebula.Server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.nebula.Http.HttpResponse.Response;
-import com.nebula.Route.RequestDispatcher;
+import com.github.darshan744.nebula.Http.HttpResponse.Response;
+import com.github.darshan744.nebula.Route.RequestDispatcher;
 
 public class HttpWorkerThread extends Thread{
     private Socket socket = null;

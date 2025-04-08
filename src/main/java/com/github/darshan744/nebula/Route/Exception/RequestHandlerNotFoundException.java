@@ -1,4 +1,4 @@
-package com.nebula.Route.Exception;
+package com.github.darshan744.nebula.Route.Exception;
 
 public class RequestHandlerNotFoundException extends RuntimeException {
 

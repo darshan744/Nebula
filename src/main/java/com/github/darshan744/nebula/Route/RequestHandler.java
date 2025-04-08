@@ -1,7 +1,7 @@
-package com.nebula.Route;
+package com.github.darshan744.nebula.Route;
 
-import com.nebula.Http.HttpRequest.Request;
-import com.nebula.Http.HttpResponse.HttpResponseBuilder;
+import com.github.darshan744.nebula.Http.HttpRequest.Request;
+import com.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
 
 @FunctionalInterface
 public interface RequestHandler {

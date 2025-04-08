@@ -1,4 +1,4 @@
-package com.nebula.Http.HttpResponse;
+package com.github.darshan744.nebula.Http.HttpResponse;
 
 
 /**

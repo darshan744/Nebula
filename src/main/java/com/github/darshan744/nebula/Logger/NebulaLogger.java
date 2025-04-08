@@ -1,4 +1,4 @@
-package com.nebula.Logger;
+package com.github.darshan744.nebula.Logger;
 
 public interface NebulaLogger {
     void severe(String message);

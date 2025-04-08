@@ -1,10 +1,10 @@
-package com.nebula.Http.HttpResponse;
+package com.github.darshan744.nebula.Http.HttpResponse;
 
 import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.nebula.Http.Constants.ContentType;
-import com.nebula.Http.Constants.HttpStatus;
+import com.github.darshan744.nebula.Http.Constants.ContentType;
+import com.github.darshan744.nebula.Http.Constants.HttpStatus;
 
 public class HttpResponseBuilder {
     private Response response;

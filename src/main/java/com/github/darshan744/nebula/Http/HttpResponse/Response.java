@@ -1,12 +1,12 @@
-package com.nebula.Http.HttpResponse;
+package com.github.darshan744.nebula.Http.HttpResponse;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.nebula.Http.Constants.HttpStatus;
-import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
+import com.github.darshan744.nebula.Http.Constants.HttpStatus;
+import com.github.darshan744.nebula.Http.Constants.HttpVersion;
+import com.github.darshan744.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 
 /**
  * <ul>

@@ -1,11 +1,11 @@
-package com.nebula.Server;
+package com.github.darshan744.nebula.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
+import com.github.darshan744.nebula.Logger.NebulaLogger;
+import com.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 public class ServerListener extends Thread {
     //custom logger (wrapper for JUL)

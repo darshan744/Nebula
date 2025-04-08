@@ -1,4 +1,4 @@
-package com.nebula.Logger;
+package com.github.darshan744.nebula.Logger;
 
 /**
  * Logger factory for NebulaLogger

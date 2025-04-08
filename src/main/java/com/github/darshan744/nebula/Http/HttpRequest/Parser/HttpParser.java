@@ -1,19 +1,19 @@
-package com.nebula.Http.HttpRequest.Parser;
+package com.github.darshan744.nebula.Http.HttpRequest.Parser;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nebula.Http.HttpRequest.Exceptions.HttpBodyParserException;
-import com.nebula.Http.HttpRequest.Exceptions.HttpHeadersParserException;
-import com.nebula.Http.HttpRequest.Exceptions.HttpParserException;
-import com.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
-import com.nebula.Http.Constants.HttpMethod;
-import com.nebula.Http.Constants.HttpVersion;
-import com.nebula.Http.HttpRequest.Request;
+import com.github.darshan744.nebula.Http.HttpRequest.Exceptions.HttpBodyParserException;
+import com.github.darshan744.nebula.Http.HttpRequest.Exceptions.HttpHeadersParserException;
+import com.github.darshan744.nebula.Http.HttpRequest.Exceptions.HttpParserException;
+import com.github.darshan744.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
+import com.github.darshan744.nebula.Logger.NebulaLogger;
+import com.github.darshan744.nebula.Logger.NebulaLoggerFactory;
+import com.github.darshan744.nebula.Http.Constants.HttpMethod;
+import com.github.darshan744.nebula.Http.Constants.HttpVersion;
+import com.github.darshan744.nebula.Http.HttpRequest.Request;
 
 public class HttpParser {
     private final int CR = 13; // \r

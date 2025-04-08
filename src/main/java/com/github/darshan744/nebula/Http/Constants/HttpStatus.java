@@ -1,4 +1,4 @@
-package com.nebula.Http.Constants;
+package com.github.darshan744.nebula.Http.Constants;
 
 /**
  * HTTP status code and their message enums

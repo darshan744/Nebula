@@ -1,4 +1,4 @@
-package com.nebula.Http.HttpRequest.Exceptions;
+package com.github.darshan744.nebula.Http.HttpRequest.Exceptions;
 
 public class RequestLineParserException extends HttpParserException{
 

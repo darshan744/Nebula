@@ -1,8 +1,8 @@
-package com.nebula.Route;
+package com.github.darshan744.nebula.Route;
 
 import java.util.HashMap;
 
-import com.nebula.Http.Constants.*;
+import com.github.darshan744.nebula.Http.Constants.HttpMethod;
 public class Router {
 
     private static Router router = null;
@@ -11,7 +11,7 @@ public class Router {
      * This stores With HTTP Method as a Key and their routes and Handler as value
      * EX : {GET : "/users" , ()->new HttpResponse()}
      */
-    private HashMap<HttpMethod , HashMap<String , RequestHandler>> routes = new HashMap<>();
+    private HashMap<HttpMethod, HashMap<String , RequestHandler>> routes = new HashMap<>();
     
     public void registerRoute(HttpMethod method , String route , RequestHandler requestHandler) {
        HashMap<String , RequestHandler> map = routes.getOrDefault(requestHandler, new HashMap<>());

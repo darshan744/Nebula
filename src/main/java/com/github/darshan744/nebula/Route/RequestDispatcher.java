@@ -1,22 +1,22 @@
-package com.nebula.Route;
+package com.github.darshan744.nebula.Route;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import com.nebula.Http.Constants.ContentType;
-import com.nebula.Http.Constants.HttpMethod;
-import com.nebula.Http.Constants.HttpStatus;
-import com.nebula.Http.HttpRequest.Request;
-import com.nebula.Http.HttpRequest.Parser.HttpParser;
-import com.nebula.Http.HttpResponse.HttpResponseBuilder;
-import com.nebula.Http.HttpResponse.Response;
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
-import com.nebula.Middleware.Handler.MiddlewareChain;
-import com.nebula.Middleware.Handler.MiddlewareRegistry;
-import com.nebula.Route.Exception.RequestHandlerNotFoundException;
-import com.nebula.Route.Exception.RouteNotFoundException;
+import com.github.darshan744.nebula.Http.Constants.ContentType;
+import com.github.darshan744.nebula.Http.Constants.HttpMethod;
+import com.github.darshan744.nebula.Http.Constants.HttpStatus;
+import com.github.darshan744.nebula.Http.HttpRequest.Request;
+import com.github.darshan744.nebula.Http.HttpRequest.Parser.HttpParser;
+import com.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
+import com.github.darshan744.nebula.Http.HttpResponse.Response;
+import com.github.darshan744.nebula.Logger.NebulaLogger;
+import com.github.darshan744.nebula.Logger.NebulaLoggerFactory;
+import com.github.darshan744.nebula.Middleware.Handler.MiddlewareChain;
+import com.github.darshan744.nebula.Middleware.Handler.MiddlewareRegistry;
+import com.github.darshan744.nebula.Route.Exception.RequestHandlerNotFoundException;
+import com.github.darshan744.nebula.Route.Exception.RouteNotFoundException;
 
 public class RequestDispatcher {
     // Router must be singleton since for the whole application

@@ -1,12 +1,12 @@
-package com.nebula;
+package com.github.darshan744.nebula;
 
 import java.io.IOException;
 
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
-import com.nebula.Middleware.Handler.MiddlewareRegistry;
-import com.nebula.Middleware.core.LoggerMiddlware;
-import com.nebula.Server.ServerListener;
+import com.github.darshan744.nebula.Logger.NebulaLogger;
+import com.github.darshan744.nebula.Logger.NebulaLoggerFactory;
+import com.github.darshan744.nebula.Middleware.Handler.MiddlewareRegistry;
+import com.github.darshan744.nebula.Middleware.core.LoggerMiddlware;
+import com.github.darshan744.nebula.Server.ServerListener;
 
 public class Nebula {
     private static final NebulaLogger logger = NebulaLoggerFactory.getLogger(Nebula.class);
