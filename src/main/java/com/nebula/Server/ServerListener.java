@@ -25,12 +25,10 @@ public class ServerListener extends Thread {
                 socket = serverSocket.accept();
                 logger.info("Connection Recieved : " + socket.getLocalAddress());
                 HttpWorkerThread httpWorkerThread = new HttpWorkerThread(socket);
-                logger.info("Spanning new Thread to handle incoming Request : ThreadID : " + httpWorkerThread.threadId());
                 httpWorkerThread.start();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.severe(e.getMessage());
             }
-            
         }
     }
 

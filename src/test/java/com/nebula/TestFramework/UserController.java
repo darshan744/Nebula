@@ -1,6 +1,5 @@
 package com.nebula.TestFramework;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nebula.Http.Constants.ContentType;
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.HttpRequest.Request;

@@ -30,7 +30,6 @@ public class HttpParser {
             if(length != null){
                 int contentLength = Integer.parseInt(length);
                 if(contentLength > 0) {
-                    logger.info("Body Found");
                      parseHttpBody(requestInputStream, request, contentLength);
                 }
             }
@@ -44,7 +43,6 @@ public class HttpParser {
 
     private void parseHttpRequestLine(InputStream requestInputStream, Request request)
             throws IOException, RequestLineParserException {
-                logger.info("Parsing Http Request Line");
         int _byte;
         StringBuilder stringBuilder = new StringBuilder();
         List<String> parts = new ArrayList<>();
@@ -71,12 +69,10 @@ public class HttpParser {
         resolveHttpVersion(parts.getLast(), request);
         request.setUrl(parts.get(1));
         resolveHttpMethod(parts.getFirst(), request);
-        logger.info("Http Request Line parsed");
     }
 
     private void parseHttpHeaders(InputStream requestInputStream, Request request)
             throws HttpHeadersParserException, IOException {
-        logger.info("Parsing Http Headers");
         int _byte;
         String key, value;
         StringBuilder buffer = new StringBuilder();
@@ -104,12 +100,10 @@ public class HttpParser {
                 buffer.append((char) _byte);
             }
         }
-        logger.info("Parsed Http Headers");
     }
 
     private void parseHttpBody(InputStream requestInputStream, Request request, int contentLength)
             throws HttpBodyParserException, IOException {
-        logger.info("Parsing Body");
         List<Byte> bytes = new ArrayList<>();
         byte _int = 0;
         while ((_int = (byte) requestInputStream.read()) != -1) {
@@ -126,7 +120,6 @@ public class HttpParser {
         toPrimitveByteArray(bytes, byteArr);
         String resultantBody = new String(byteArr);
         request.setBody(resultantBody);
-        logger.info("Http Body Parsed");
     }
 
     private void resolveHttpVersion(String version, Request request) throws RequestLineParserException {

@@ -1,11 +1,15 @@
 package com.nebula.Route;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
+import com.nebula.Http.Constants.ContentType;
 import com.nebula.Http.Constants.HttpMethod;
+import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.HttpRequest.Request;
 import com.nebula.Http.HttpRequest.Parser.HttpParser;
+import com.nebula.Http.HttpResponse.HttpResponseBuilder;
 import com.nebula.Http.HttpResponse.Response;
 import com.nebula.Logger.NebulaLogger;
 import com.nebula.Logger.NebulaLoggerFactory;
@@ -42,7 +46,40 @@ public class RequestDispatcher {
          HttpParser parser = new HttpParser();
          Request req = parser.parseHttpRequest(ioInputStream);
          logger.info("Forwarding Request to Route : " + req.getUrl() + " Method : " + req.getMethod());
-         return forwardRequest(req);
+         Response res = null;
+         try {
+            res = forwardRequest(req);
+            return res;
+         } catch (RequestHandlerNotFoundException requestHandlerNotFoundException) {
+            Object errorObject = new Object(){
+                public String error = requestHandlerNotFoundException.getErrorCode();
+                public String httpMethod = req.getMethod().toString();
+                public String route = req.getUrl();
+             };
+            HttpResponseBuilder builder = new HttpResponseBuilder()
+                                               .addContentType(ContentType.TEXT_PLAIN)
+                                               .setStatusCode(HttpStatus.NOT_FOUND)
+                                               .addBody(errorObject);
+            res = builder.build();
+            return res;
+         }
+         catch(RouteNotFoundException routeNotFoundException) {
+            // The Jackson serializes only the public fields
+            // So we the error must be public not default 
+            
+            Object errorObject = new Object(){
+               public String error = routeNotFoundException.getErrorCode();
+               public String httpMethod = req.getMethod().toString();
+               public String route = req.getUrl();
+               public String date = LocalDateTime.now().toString();
+             };
+            HttpResponseBuilder builder = new HttpResponseBuilder()
+                                               .addContentType(ContentType.TEXT_PLAIN)
+                                               .setStatusCode(HttpStatus.NOT_FOUND)
+                                               .addBody(errorObject);
+            res = builder.build();
+            return res;
+         }
     }
 
 }

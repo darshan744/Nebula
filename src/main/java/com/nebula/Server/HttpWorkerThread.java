@@ -6,12 +6,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.nebula.Http.HttpResponse.Response;
-import com.nebula.Logger.NebulaLogger;
-import com.nebula.Logger.NebulaLoggerFactory;
 import com.nebula.Route.RequestDispatcher;
 
 public class HttpWorkerThread extends Thread{
-    private NebulaLogger logger = NebulaLoggerFactory.getLogger(HttpWorkerThread.class);
     private Socket socket = null;
     HttpWorkerThread(Socket socket) {
         this.socket = socket;
@@ -23,10 +20,8 @@ public class HttpWorkerThread extends Thread{
         try {
             ioInputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
-            logger.info("Request Recieved");
             RequestDispatcher dispatcher = new RequestDispatcher();
             Response res = dispatcher.handleRequest(ioInputStream);
-            logger.info("Response Sent");
             outputStream.write(res.getBytes());
         } catch (IOException e) {
             e.printStackTrace();

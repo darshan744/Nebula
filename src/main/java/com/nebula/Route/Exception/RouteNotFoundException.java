@@ -1,5 +1,10 @@
 package com.nebula.Route.Exception;
 
 public class RouteNotFoundException extends RuntimeException{
-    public RouteNotFoundException(String message) {super(message);}
+    private String errorCode;
+    public RouteNotFoundException(String message) {super(message);errorCode = "NO_ROUTE_FOUND";}
+    public String getErrorCode() {
+        return errorCode;
+    }
+    
 }
