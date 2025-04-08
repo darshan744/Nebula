@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.nebula.Http.Constants.*;
 public class Router {
+
     private static Router router = null;
     /*
      * Routing table for managing incoming routes
@@ -24,7 +25,7 @@ public class Router {
 
     private Router() {}
 
-    public static Router getRouter() {
+    public static synchronized Router getRouter() {
         if(router == null) router = new Router();
         return router;
     }

@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.nebula.Http.HttpRequest.Request;
-import com.nebula.Http.HttpRequest.Parser.HttpParser;
+import com.nebula.Http.HttpResponse.Response;
+import com.nebula.Route.RequestDispatcher;
 
 public class HttpWorkerThread extends Thread{
     
@@ -22,9 +22,12 @@ public class HttpWorkerThread extends Thread{
             
             ioInputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
+            
+            RequestDispatcher dispatcher = new RequestDispatcher();
+            Response res = dispatcher.handleRequest(ioInputStream);
 
-            HttpParser parser = new HttpParser();
-            Request req = parser.parseHttpRequest(ioInputStream);
+            outputStream.write(res.getBytes());
+           
             
         } catch (IOException e) {
             e.printStackTrace();

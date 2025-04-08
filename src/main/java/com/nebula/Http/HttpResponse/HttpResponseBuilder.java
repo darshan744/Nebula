@@ -8,7 +8,7 @@ import com.nebula.Http.Constants.HttpStatus;
 public class HttpResponseBuilder {
     private Response response;
 
-    HttpResponseBuilder() {
+   public HttpResponseBuilder() {
         response = new Response();
         addDefaultHeaders();
     }
