@@ -9,6 +9,8 @@ import com.nebula.Http.HttpRequest.Exceptions.HttpBodyParserException;
 import com.nebula.Http.HttpRequest.Exceptions.HttpHeadersParserException;
 import com.nebula.Http.HttpRequest.Exceptions.HttpParserException;
 import com.nebula.Http.HttpRequest.Exceptions.RequestLineParserException;
+import com.nebula.Logger.NebulaLogger;
+import com.nebula.Logger.NebulaLoggerFactory;
 import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpVersion;
 import com.nebula.Http.HttpRequest.Request;
@@ -17,7 +19,7 @@ public class HttpParser {
     private final int CR = 13; // \r
     private final int LF = 10; // \n
     private final int SP = 32; // space
-
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(HttpParser.class);
 
     public Request parseHttpRequest(InputStream requestInputStream) {
         Request request = new Request();
@@ -26,18 +28,20 @@ public class HttpParser {
             parseHttpHeaders(requestInputStream, request);
             int contentLength = Integer.parseInt(request.getHeader("content-length"));
             if(contentLength > 0) {
+                logger.info("Body Found");
                  parseHttpBody(requestInputStream, request, contentLength);
             }
         } catch (HttpParserException httpParserException) {
-            System.out.println(httpParserException.getMessage());
-        } catch (IOException httpParserException) {
-            System.out.println(httpParserException.getMessage());
+            logger.severe(httpParserException.getMessage());
+        } catch (IOException ioException) {
+            logger.severe(ioException.getMessage());
         }
         return request;
     }
 
     private void parseHttpRequestLine(InputStream requestInputStream, Request request)
             throws IOException, RequestLineParserException {
+                logger.info("Parsing Http Request Line");
         int _byte;
         StringBuilder stringBuilder = new StringBuilder();
         List<String> parts = new ArrayList<>();
@@ -64,11 +68,12 @@ public class HttpParser {
         resolveHttpVersion(parts.getLast(), request);
         request.setUrl(parts.get(1));
         resolveHttpMethod(parts.getFirst(), request);
+        logger.info("Http Request Line parsed");
     }
 
     private void parseHttpHeaders(InputStream requestInputStream, Request request)
             throws HttpHeadersParserException, IOException {
-
+        logger.info("Parsing Http Headers");
         int _byte;
         String key, value;
         StringBuilder buffer = new StringBuilder();
@@ -96,10 +101,12 @@ public class HttpParser {
                 buffer.append((char) _byte);
             }
         }
+        logger.info("Parsed Http Headers");
     }
 
     private void parseHttpBody(InputStream requestInputStream, Request request, int contentLength)
             throws HttpBodyParserException, IOException {
+        logger.info("Parsing Body");
         List<Byte> bytes = new ArrayList<>();
         byte _int = 0;
         while ((_int = (byte) requestInputStream.read()) != -1) {
@@ -116,6 +123,7 @@ public class HttpParser {
         toPrimitveByteArray(bytes, byteArr);
         String resultantBody = new String(byteArr);
         request.setBody(resultantBody);
+        logger.info("Http Body Parsed");
     }
 
     private void resolveHttpVersion(String version, Request request) throws RequestLineParserException {
