@@ -1,6 +1,5 @@
 package com.nebula.Http.HttpResponse;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -41,7 +40,6 @@ public final class Response {
     public int setContentBody(Object contentBody) throws JsonProcessingException {
         serializedBody = jsonParser.serializeObject(contentBody);
         this.contentBody = contentBody;
-        // System.out.println(Arrays.toString(serializedBody.getBytes()));
         return serializedBody.getBytes(StandardCharsets.US_ASCII).length;
     }
 
@@ -75,7 +73,6 @@ public final class Response {
            response.append(serializedBody);
         }
         response.append(CRLF);
-        System.out.println(response);
         return response.toString().getBytes(StandardCharsets.US_ASCII);
     }
 }

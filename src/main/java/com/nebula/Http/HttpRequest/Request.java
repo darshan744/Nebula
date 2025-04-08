@@ -8,6 +8,8 @@ import com.nebula.Http.Constants.HttpMethod;
 import com.nebula.Http.Constants.HttpStatus;
 import com.nebula.Http.Constants.HttpVersion;
 import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
+import com.nebula.Logger.NebulaLogger;
+import com.nebula.Logger.NebulaLoggerFactory;
 
 /**
  * @apiNote
@@ -19,6 +21,8 @@ import com.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 public class Request {
    
     private final NebulaJsonParser jsonParser = new NebulaJsonParser();
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(Request.class);
+    
     private String body;
     private HttpMethod method;
     private HttpStatus status;
@@ -88,7 +92,7 @@ public class Request {
         try {
             return jsonParser.getObjectOfTheBody(getBody(), clazz);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            logger.severe(e.getMessage());
             return null;
         }
     }

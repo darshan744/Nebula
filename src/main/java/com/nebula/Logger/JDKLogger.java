@@ -12,7 +12,7 @@ class JDKLogger implements NebulaLogger {
 
     @Override
     public void config(String message) {
-        logger.info(message);
+        logger.config(message);
     }
 
     @Override
@@ -22,8 +22,7 @@ class JDKLogger implements NebulaLogger {
 
     @Override
     public void info(String message) {
-        logger.fine(message);
-
+        logger.info(message);
     }
 
     @Override
