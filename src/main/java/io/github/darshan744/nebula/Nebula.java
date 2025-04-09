@@ -29,7 +29,16 @@ public class Nebula {
             logger.severe(e.getMessage());
         }
     }
+    /**
+     * Configues application
+     */
     private static void configureApplication() {
+        logger.config("Configuring Application");
+        configureMiddleware();
+    }
+    //configures default middlewares
+    private static void configureMiddleware() {
+        logger.config("Registering Default Middlewares");
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         LoggerMiddlware loggerMiddlware = new LoggerMiddlware();
         registry.registerMiddleware(loggerMiddlware);

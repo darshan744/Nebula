@@ -5,7 +5,7 @@ public enum ContentType {
     JSON("application/json"),
     TEXT_PLAIN("text/plain"),
     HTML("text/html");
-
+    
     private final String contentType;
 
     ContentType(String contentType) {

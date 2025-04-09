@@ -24,7 +24,8 @@ In your `main` method, call `Nebula.start()` to start the server:
 
 ```java
 public static void main(String[] args) {
-    Nebula.start();
+    Nebula.start();//Default 7090  can also run in custom port
+    //ex : Nebula.start(port);
 }
 ```
 
@@ -32,6 +33,7 @@ public static void main(String[] args) {
 - [x] Request/Response cycle
 - [x] Routing support 
 - [x] Middleware support
+- [ ] Support for path variable And Request Param
 - [ ] Global Exception
 - [ ] Easier Response handlers
 - [ ] Default Database Integeration

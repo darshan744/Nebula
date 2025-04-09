@@ -38,12 +38,12 @@ public class RequestDispatcher {
     private void forwardRequest(Request request , Response response) throws RequestHandlerNotFoundException {
         // functional interface for handling the incoming request
         RequestHandler requestHandler = getRequestHandler(request.getMethod(), request.getUrl());
+        // TODO handle route with params
         if (requestHandler == null) {
             throw new RequestHandlerNotFoundException(
                     "Request Handler Method not found for ROUTE : " + request.getMethod() + " Method : "
                             + request.getUrl());
         }
-
         requestHandler.handleRequest(request , response);
     }
     /**

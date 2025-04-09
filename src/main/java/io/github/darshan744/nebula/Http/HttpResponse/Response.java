@@ -12,16 +12,7 @@ import io.github.darshan744.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
-/**
- * <ul>
- * <li>This is the final response Body
- * <li>The building and managing of the response body is done using Response Class
- * <li>The dev can also use this class if they wish to have a fine grained control
- * <li>Then its the Dev's duty to handle the headers as whole
- * </ul>
- */
 public final class Response {
-
     private final NebulaLogger logger = NebulaLoggerFactory.getLogger(getClass());
     private final String CRLF = "\r\n";
     private HttpStatus status;
@@ -62,6 +53,12 @@ public final class Response {
         return serializedBody.getBytes(StandardCharsets.US_ASCII).length;
     }
 
+    public Response setContentType(ContentType contentType) {
+        HashMap<String, String> headers = getHeaders();
+        headers.put(Headers.CONTENT_TYPE.getHeader(), contentType.getContentType());
+        return this;
+    }
+
     /**
      * 
      * HttpStatus Cod setters and getters
@@ -92,12 +89,6 @@ public final class Response {
 
     public Response addHeader(String header, String value) {
         getHeaders().put(header, value);
-        return this;
-    }
-
-    public Response setContentType(ContentType contentType) {
-        HashMap<String, String> headers = getHeaders();
-        headers.put(Headers.CONTENT_TYPE.getHeader(), contentType.getContentType());
         return this;
     }
 
@@ -136,7 +127,20 @@ public final class Response {
     public Response serverError() {
         return setStatusCode(HttpStatus.SERVER_ERROR);
     }
-
+    /**
+     * 
+     * @return new Status Line
+     * @example HTTP/1.1 200 OK \r\n
+     */
+    private StringBuilder statusLineBuilder() {
+       return new StringBuilder()
+                .append(HttpVersion.V1.getVersion())
+                .append(" ")
+                .append(getStatus().getStatusCode())
+                .append(" ")
+                .append(getStatus().getMessage())
+                .append(CRLF);
+    }
     /**
      * @apiNote
      * Converts the whole Response Object to String and then convert it to Bytes
@@ -145,13 +149,7 @@ public final class Response {
      */
     public byte[] getBytes() throws JsonProcessingException {
        
-        StringBuilder statusLine = new StringBuilder();
-        statusLine.append(HttpVersion.V1.getVersion())
-                .append(" ")
-                .append(getStatus().getStatusCode())
-                .append(" ")
-                .append(getStatus().getMessage())
-                .append(CRLF);
+        StringBuilder statusLine = statusLineBuilder();
         
         // Headers as a string 
         StringBuilder headers = new StringBuilder();
