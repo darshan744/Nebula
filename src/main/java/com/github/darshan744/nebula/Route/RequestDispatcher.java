@@ -97,7 +97,7 @@ public class RequestDispatcher {
 
     private HttpResponseBuilder errorBuilder(Object errorBody) {
         return new HttpResponseBuilder()
-        .addContentType(ContentType.TEXT_PLAIN)
+        .addContentType(ContentType.JSON)
         .setStatusCode(HttpStatus.NOT_FOUND)
         .addBody(errorBody);
     }
