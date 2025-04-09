@@ -6,10 +6,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.github.darshan744.nebula.Http.Constants.ContentType;
 import io.github.darshan744.nebula.Http.Constants.HttpStatus;
+import io.github.darshan744.nebula.Logger.NebulaLogger;
+import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 public class HttpResponseBuilder {
     private Response response;
-
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(getClass());
    public HttpResponseBuilder() {
         response = new Response();
         addDefaultHeaders();
@@ -41,7 +43,7 @@ public class HttpResponseBuilder {
            int contentLength = response.setContentBody(body);
            addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.severe(e.getMessage());
         }
         return this;
     }
@@ -50,13 +52,22 @@ public class HttpResponseBuilder {
         return this.response;
     }
 
-    
-
     private void addDefaultHeaders() {
         addHeader(Headers.CONTENT_TYPE, ContentType.JSON.getContentType());
         addHeader(Headers.SERVER, "Nebula/0.1");
         addHeader(Headers.CONNECTION, "close");
     }
 
+    public HttpResponseBuilder ok() {
+        return setStatusCode(HttpStatus.OK);
+    }
 
+    public HttpResponseBuilder notFound() {
+        return setStatusCode(HttpStatus.NOT_FOUND);
+    }
+
+    public HttpResponseBuilder serverError() {
+        return setStatusCode(HttpStatus.SERVER_ERROR);
+    }
+    
 }
