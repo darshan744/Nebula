@@ -1,7 +1,7 @@
 package io.github.darshan744.nebula.Route;
 
 import io.github.darshan744.nebula.Http.HttpRequest.Request;
-import io.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
+import io.github.darshan744.nebula.Http.HttpResponse.Response;
 
 @FunctionalInterface
 public interface RequestHandler {
@@ -13,5 +13,5 @@ public interface RequestHandler {
      * <li>The Nebula will handle creating response object serialization and sending
      *<ul>
      */
-    void handleRequest(Request request , HttpResponseBuilder builder);
+    void handleRequest(Request request , Response builder);
 }

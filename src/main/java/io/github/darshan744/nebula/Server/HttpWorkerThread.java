@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 import io.github.darshan744.nebula.Http.Constants.ContentType;
 import io.github.darshan744.nebula.Http.Constants.HttpStatus;
-import io.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
 import io.github.darshan744.nebula.Http.HttpResponse.Response;
 import io.github.darshan744.nebula.Route.RequestDispatcher;
 
@@ -41,7 +40,7 @@ public class HttpWorkerThread extends Thread{
                     public String timeStamp = LocalDateTime.now().toString();
                 };
                 
-                Response res = new HttpResponseBuilder().setStatusCode(HttpStatus.SERVER_ERROR).addContentType(ContentType.JSON).addBody(obj).build();
+                Response res = new Response().setStatusCode(HttpStatus.SERVER_ERROR).setContentType(ContentType.JSON).addBody(obj);
                 outputStream.write(res.getBytes());
             }
         } catch (IOException e) {

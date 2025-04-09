@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.darshan744.nebula.Http.HttpRequest.Request;
-import io.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
+import io.github.darshan744.nebula.Http.HttpResponse.Response;
 import io.github.darshan744.nebula.Middleware.Middleware;
 
 public class MiddlewareChain {
@@ -15,10 +15,10 @@ public class MiddlewareChain {
         this.middlewares = middlewares;
     }
 
-    public void next(Request req , HttpResponseBuilder builder , MiddlewareChain chain) {
+    public void next(Request req , Response res , MiddlewareChain chain) {
         if(currentMiddleware < middlewares.size()) {
             Middleware middleware = middlewares.get(currentMiddleware++);
-            middleware.middlewareHandler(req, builder, this);
+            middleware.middlewareHandler(req, res, this);
         }
     }
 

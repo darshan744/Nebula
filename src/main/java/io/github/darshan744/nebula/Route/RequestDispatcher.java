@@ -9,7 +9,6 @@ import io.github.darshan744.nebula.Http.Constants.HttpMethod;
 import io.github.darshan744.nebula.Http.Constants.HttpStatus;
 import io.github.darshan744.nebula.Http.HttpRequest.Request;
 import io.github.darshan744.nebula.Http.HttpRequest.Parser.HttpParser;
-import io.github.darshan744.nebula.Http.HttpResponse.HttpResponseBuilder;
 import io.github.darshan744.nebula.Http.HttpResponse.Response;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
@@ -23,7 +22,6 @@ public class RequestDispatcher {
     // we need the regitered routes
     private Router router = Router.getRouter();
     private NebulaLogger logger = NebulaLoggerFactory.getLogger(RequestDispatcher.class);
-
     private RequestHandler getRequestHandler(HttpMethod method, String route) {
         // {"/users" , Function}
         HashMap<String, RequestHandler> routesForMethod = router.getMethodRoutes(method);
@@ -37,7 +35,7 @@ public class RequestDispatcher {
         return requestHandler;
     }
 
-    private void forwardRequest(Request request , HttpResponseBuilder builder) throws RequestHandlerNotFoundException {
+    private void forwardRequest(Request request , Response response) throws RequestHandlerNotFoundException {
         // functional interface for handling the incoming request
         RequestHandler requestHandler = getRequestHandler(request.getMethod(), request.getUrl());
         if (requestHandler == null) {
@@ -46,9 +44,14 @@ public class RequestDispatcher {
                             + request.getUrl());
         }
 
-        requestHandler.handleRequest(request , builder);
+        requestHandler.handleRequest(request , response);
     }
-
+    /**
+     * Takes the incoming stream parses it passes through middlewares passed to handler 
+     * Gets serialized and then written with outputstream
+     * @param ioInputStream
+     * @return
+     */
     public Response handleRequest(InputStream ioInputStream) {
         // parser for inputStream
         logger.info("Before Parser");
@@ -56,15 +59,14 @@ public class RequestDispatcher {
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         Request req = parser.parseHttpRequest(ioInputStream);
         logger.info("After Parser");
-        Response res = null;
+        Response res = new Response();
         MiddlewareChain chain = new MiddlewareChain(registry.getMiddlewares());
-        HttpResponseBuilder builder = new HttpResponseBuilder();
+       
         try {
-            chain.next(req, builder, chain);
+            chain.next(req, res, chain);
             // forwards to the resultant endpoint handler
-            forwardRequest(req , builder);
+            forwardRequest(req , res);
             logger.info("Response");
-            res = builder.build();
             return res;
         } catch (RequestHandlerNotFoundException requestHandlerNotFoundException) {
             logger.severe(requestHandlerNotFoundException.getMessage());
@@ -74,9 +76,7 @@ public class RequestDispatcher {
                 public String httpMethod = req.getMethod().toString();
                 public String route = req.getUrl();
             };
-            
-            builder = errorBuilder(errorObject);
-            res = builder.build();
+            res = res.serverError().addBody(errorObject);
             
             return res;
         } catch (RouteNotFoundException routeNotFoundException) {
@@ -85,19 +85,19 @@ public class RequestDispatcher {
             logger.severe(routeNotFoundException.getMessage());
             Object errorObject = new Object() {
                 public String error = routeNotFoundException.getErrorCode();
+                public String description = routeNotFoundException.getMessage();
                 public String httpMethod = req.getMethod().toString();
                 public String route = req.getUrl();
                 public String date = LocalDateTime.now().toString();
             };
-            builder = errorBuilder(errorObject);
-            res = builder.build();
+            res = res.serverError().addBody(errorObject);
             return res;
         }
     }
 
-    private HttpResponseBuilder errorBuilder(Object errorBody) {
-        return new HttpResponseBuilder()
-        .addContentType(ContentType.JSON)
+    private Response errorBuilder(Object errorBody) {
+        return new Response()
+        .setContentType(ContentType.JSON)
         .setStatusCode(HttpStatus.NOT_FOUND)
         .addBody(errorBody);
     }
