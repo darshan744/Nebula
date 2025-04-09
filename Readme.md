@@ -32,13 +32,13 @@ public static void main(String[] args) {
 - [x] Request/Response cycle
 - [x] Routing support 
 - [x] Middleware support
-- [] Global Exception
-- [] Easier Response handlers
-- [] Default Database Integeration
-- [] Static file handling
-- [] Authentication 
-- [] File logger
-- [] Custom Configuration
+- [ ] Global Exception
+- [ ] Easier Response handlers
+- [ ] Default Database Integeration
+- [ ] Static file handling
+- [ ] Authentication 
+- [ ] File logger
+- [ ] Custom Configuration
 
 ## 📝Author
  Built with ❣️by [@darshan744](http://github.com/darshan744)
