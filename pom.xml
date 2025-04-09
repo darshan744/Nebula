@@ -30,12 +30,4 @@
         </dependency>
        
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/darshan744/Nebula</url>
-        </repository>
-    </distributionManagement>
-
 </project>
