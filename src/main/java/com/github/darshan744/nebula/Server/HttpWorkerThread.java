@@ -32,7 +32,8 @@ public class HttpWorkerThread extends Thread{
                 //converts stream to Request Object and handle the registered url
                 Response res = dispatcher.handleRequest(ioInputStream);
                 // to send our recieved resposne
-                outputStream.write(res.getBytes());
+                byte[] bytes = res.getBytes();
+                outputStream.write(bytes);
             } catch (Exception e) {
                 var obj = new Object(){
                     public String errorCode = "SERVER_ERROR";
@@ -45,6 +46,9 @@ public class HttpWorkerThread extends Thread{
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        catch(Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
         finally {
             if(ioInputStream != null) {
