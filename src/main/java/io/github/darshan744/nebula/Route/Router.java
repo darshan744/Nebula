@@ -11,6 +11,7 @@ public class Router {
      * This stores With HTTP Method as a Key and their routes and Handler as value
      * EX : {GET : "/users" , ()->new HttpResponse()}
      */
+    
     private HashMap<HttpMethod, HashMap<String , RequestHandler>> routes = new HashMap<>();
     
     public void registerRoute(HttpMethod method , String route , RequestHandler requestHandler) {
