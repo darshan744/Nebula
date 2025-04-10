@@ -13,11 +13,10 @@ import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 /**
- * @apiNote
+ *  
  * REQUEST BODY FOR HTTP
- *<ul>
- * Contains <li> HTTP Method <li> HTTP Version <li> Route <li> Body <li> Headers (As map) 
- <ul>
+ *
+ * Contains HTTP Method HTTP Version  Route Body  Headers (As map) 
  */
 public class Request {
    
@@ -86,8 +85,8 @@ public class Request {
     }
 
     /**
-     * @param clazz mapp object to that class
-     * @return either the parsed object or null if error occured;
+     *  param clazz mapp object to that class
+     *  return either the parsed object or null if error occured;
      */
     public <T> T getBody(Class<T> clazz) {
         try {

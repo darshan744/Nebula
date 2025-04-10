@@ -25,10 +25,9 @@ public final class Response {
         ok();
         addDefaultHeaders();
     }
-
     /**
      *  
-     * @return HashMap of Headers
+     *  return HashMap of Headers
      */
     public HashMap<String, String> getHeaders() {
         return headers;
@@ -43,9 +42,9 @@ public final class Response {
     }
 
     /**
-     * @param contentBody - Object of the body
-     * @return the number of bytes of the characters (Charset-US_ASCII)
-     * @throws JsonProcessingException
+     *  param contentBody - Object of the body
+     *  return the number of bytes of the characters (Charset-US_ASCII)
+     *  throws JsonProcessingException
      */
     private int setContentBody(Object contentBody) throws JsonProcessingException {
         serializedBody = jsonParser.serializeObject(contentBody);
@@ -78,9 +77,9 @@ public final class Response {
 
     /**
      * Overloaded addHeader for ENUM as well as Custom headers
-     * @param header
-     * @param value
-     * @return
+     *  param header
+     *  param value
+     *  return
      */
     public Response addHeader(Headers header, String value) {
         addHeader(header.getHeader(), value);
@@ -114,7 +113,7 @@ public final class Response {
 
     /**
      * Helpers for setting status code
-     * @return
+     *  return
      */
     public Response ok() {
         return setStatusCode(HttpStatus.OK);
@@ -129,8 +128,8 @@ public final class Response {
     }
     /**
      * 
-     * @return new Status Line
-     * @example HTTP/1.1 200 OK \r\n
+     *  return new Status Line
+     *  example HTTP/1.1 200 OK \r\n
      */
     private StringBuilder statusLineBuilder() {
        return new StringBuilder()
@@ -142,10 +141,10 @@ public final class Response {
                 .append(CRLF);
     }
     /**
-     * @apiNote
+     *  
      * Converts the whole Response Object to String and then convert it to Bytes
-     * @return byte[] of the whole response 
-     * @throws JsonProcessingException when converting object to json 
+     *  return byte[] of the whole response 
+     *  throws JsonProcessingException when converting object to json 
      */
     public byte[] getBytes() throws JsonProcessingException {
        

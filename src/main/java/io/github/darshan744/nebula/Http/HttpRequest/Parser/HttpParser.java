@@ -22,7 +22,7 @@ import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 >The Buffered Reader reads the InputStreamReader as Characters not as Bytes.
 > Http is a Byte related Protocol. The Content-Length mentioned in the Headers is the actually bytes length of the Body
 > not as Character length for Example consider below body
-{@code
+{ code
     "{\r\n" +
      "\"name\":\"John Doe\",\r\n" +
      "\"email\":\"john@example.com\r\n" +
