@@ -59,7 +59,7 @@ In your main application get Router Object and add the Class object to register
     public static void main(String[] args) {
         HelloWorldController controller = new HelloWorldController()
         Router router = Router.getRouter();
-        router.registerRoute(HttpMethod.GET , "hello-world" ,controller);
+        router.registerRoute(HttpMethod.GET , "/hello-world" ,controller);
     }
 ```
 
