@@ -30,12 +30,12 @@
         <connection>scm:git:git://github.com/darshan744/Nebula.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:darshan744/Nebula.git</developerConnection>
         <url>https://github.com/darshan744/Nebula</url>
-        <tag>v1.1.0</tag>
+        <tag>v1.0.1</tag>
     </scm>
 
     <groupId>io.github.darshan744</groupId>
     <artifactId>nebula</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
