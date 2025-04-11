@@ -18,7 +18,9 @@ public class MiddlewareChain {
     public void next(Request req , Response res , MiddlewareChain chain) {
         if(currentMiddleware < middlewares.size()) {
             Middleware middleware = middlewares.get(currentMiddleware++);
-            middleware.middlewareHandler(req, res, this);
+            if(middleware != null) {
+                middleware.middlewareHandler(req, res, this);
+            }
         }
     }
 

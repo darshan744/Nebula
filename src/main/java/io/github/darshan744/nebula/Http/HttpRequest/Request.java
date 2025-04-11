@@ -13,9 +13,7 @@ import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 /**
- *  
  * REQUEST BODY FOR HTTP
- *
  * Contains HTTP Method HTTP Version  Route Body  Headers (As map) 
  */
 public class Request {
@@ -29,9 +27,33 @@ public class Request {
     private String url;
     private HttpVersion httpVersion;
     private HashMap<String , String> headers;
-
+    private HashMap<String ,String> params;
+    private HashMap<String , String> queryParams;
     
+    public void setParams(HashMap<String, String> params) {
+        this.params = params;
+    }
+    
+    public void setQueryParams(HashMap<String, String> queryParams) {
+        this.queryParams = queryParams;
+    }
+    /**
+     * Returns the param stored from the URL
+     */
+    public String getParam(String key) {
+        return params.get(key);
+    }
+
+    /**
+     * Returns the query Parameter
+     */
+    public String getQueryParam(String key) {
+        return queryParams.get(key);
+    }
+
     public Request() {
+        params = new HashMap<>();
+        queryParams = new HashMap<>();
         this.headers = new LinkedHashMap<>();
     }
     public HttpVersion getHttpVersion() {
@@ -104,6 +126,7 @@ public class Request {
     public String getHeader(String header) {
         return this.headers.get(header.toLowerCase());
     }
+    
     @Override
     public String toString() {
         return "Request{" +
@@ -114,4 +137,5 @@ public class Request {
                 "\nheaders=" + headers +
                 '}';
     }
+    
 }

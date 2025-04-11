@@ -23,11 +23,10 @@ public final class Response {
 
     public Response(){
         ok();
-        addDefaultHeaders();
+        defaultHeaders();
     }
     /**
-     *  
-     *  return HashMap of Headers
+     * return HashMap of Headers
      */
     public HashMap<String, String> getHeaders() {
         return headers;
@@ -59,8 +58,7 @@ public final class Response {
     }
 
     /**
-     * 
-     * HttpStatus Cod setters and getters
+     * HttpStatus Code setters and getters
      */
     public HttpStatus getStatus() {
         return status;
@@ -105,31 +103,15 @@ public final class Response {
      * Util method for default headers
      * Default headers that must be set in every response
      */
-    private void addDefaultHeaders() {
+    private void defaultHeaders() {
         addHeader(Headers.CONTENT_TYPE, ContentType.JSON.getContentType());
         addHeader(Headers.SERVER, "Nebula/0.1");
         addHeader(Headers.CONNECTION, "close");
     }
 
     /**
-     * Helpers for setting status code
-     *  return
-     */
-    public Response ok() {
-        return setStatusCode(HttpStatus.OK);
-    }
-
-    public Response notFound() {
-        return setStatusCode(HttpStatus.NOT_FOUND);
-    }
-
-    public Response serverError() {
-        return setStatusCode(HttpStatus.SERVER_ERROR);
-    }
-    /**
-     * 
-     *  return new Status Line
-     *  example HTTP/1.1 200 OK \r\n
+     * return new Status Line
+     * example HTTP/1.1 200 OK \r\n
      */
     private StringBuilder statusLineBuilder() {
        return new StringBuilder()
@@ -141,10 +123,9 @@ public final class Response {
                 .append(CRLF);
     }
     /**
-     *  
      * Converts the whole Response Object to String and then convert it to Bytes
-     *  return byte[] of the whole response 
-     *  throws JsonProcessingException when converting object to json 
+     * return byte[] of the whole response 
+     * throws JsonProcessingException when converting object to json 
      */
     public byte[] getBytes() throws JsonProcessingException {
        
@@ -164,4 +145,38 @@ public final class Response {
         response.append(CRLF);
         return response.toString().getBytes(StandardCharsets.US_ASCII);
     }
+
+    /**
+     * Sets body type to JSON
+     * */
+    public Response json() {
+        setContentType(ContentType.JSON);
+        return this;
+    }
+
+    public Response text() {
+        setContentType(ContentType.HTML);
+        return this;
+    }
+    /**
+     * Helpers for setting status code
+     *  return
+     */
+    public Response ok() {
+        return setStatusCode(HttpStatus.OK);
+    }
+
+    public Response notFound() {
+        return setStatusCode(HttpStatus.NOT_FOUND);
+    }
+
+    public Response serverError() {
+        return setStatusCode(HttpStatus.SERVER_ERROR);
+    }
+
+    public Response unAuthorized() {
+        setStatus(HttpStatus.UNAUTHORIZED);
+        return this;
+    }
+    
 }

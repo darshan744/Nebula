@@ -1,6 +1,8 @@
 package io.github.darshan744.nebula.Route;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import io.github.darshan744.nebula.Http.Constants.HttpMethod;
 public class Router {
@@ -9,29 +11,26 @@ public class Router {
     /*
      * Routing table for managing incoming routes
      * This stores With HTTP Method as a Key and their routes and Handler as value
-     * EX : {GET : "/users" , ()->new HttpResponse()}
+     * EX : {GET : [RouteDefinition]}
      */
+    private HashMap<HttpMethod, List<RouteDefinition>> routes = new HashMap<>();
     
-    private HashMap<HttpMethod, HashMap<String , RequestHandler>> routes = new HashMap<>();
-    
-    public void registerRoute(HttpMethod method , String route , RequestHandler requestHandler) {
-       HashMap<String , RequestHandler> map = routes.getOrDefault(requestHandler, new HashMap<>());
-       map.put(route , requestHandler);
-       routes.put(method, map);
+    public void registerRoute(HttpMethod method , String path , RequestHandler requestHandler) {
+       List<RouteDefinition> route = routes.getOrDefault(method , new ArrayList<>());
+       route.add(new RouteDefinition(method , path , requestHandler));
+       routes.put(method, route);
     }
 
-    public HashMap<String , RequestHandler> getMethodRoutes(HttpMethod method) {
+    public List<RouteDefinition> getMethodRoutes(HttpMethod method) {
         return routes.get(method);
     }
 
     private Router() {}
-
+    /**
+     * Router constructor for singleton class
+     */
     public static synchronized Router getRouter() {
         if(router == null) router = new Router();
         return router;
     }
- // TODO Parsing Request param and path variable
- 
- 
-
 }

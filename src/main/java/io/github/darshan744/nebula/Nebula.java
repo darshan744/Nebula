@@ -42,5 +42,6 @@ public class Nebula {
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         LoggerMiddlware loggerMiddlware = new LoggerMiddlware();
         registry.registerMiddleware(loggerMiddlware);
+        System.out.println(registry.getMiddlewares());
     }
 }

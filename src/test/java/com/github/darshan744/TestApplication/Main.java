@@ -12,6 +12,9 @@ public class Main {
         Router router = Router.getRouter();
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         registry.registerMiddleware(null);
-        router.registerRoute(HttpMethod.POST, "/users", controller);
+        //test for param
+        router.registerRoute(HttpMethod.POST, "/users/{id}", controller);
+        //test for queryparam
+        router.registerRoute(HttpMethod.GET, "/users", new GetUser());
     }
 }
