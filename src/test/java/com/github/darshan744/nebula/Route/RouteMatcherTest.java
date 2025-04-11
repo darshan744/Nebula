@@ -19,9 +19,12 @@ public class RouteMatcherTest {
         boolean pathTest2 = RouteMatcher.match("/users/EMP123", "/users/{id}/"); // true (trailing slash optional?)
         boolean pathTest3 = RouteMatcher.match("/users/EMP123/books/45", "/users/{id}/books/{bookId}"); // true
         boolean pathTest4 = RouteMatcher.match("/users//books/45", "/users/{id}/books/{bookId}"); // false (empty id)
-        boolean pathTest5 = RouteMatcher.match("/users/EMP123/books", "/users/{id}/books/{bookId}"); // false (missing bookId)
+        boolean pathTest5 = RouteMatcher.match("/users/EMP123/books", "/users/{id}/books/{bookId}"); // false (missing
+                                                                                                     // bookId)
         boolean pathTest6 = RouteMatcher.match("/users/EMP123/books/45/reviews", "/users/{id}/books/{bookId}/reviews"); // true
-        boolean pathTest7 = RouteMatcher.match("/users/EMP123/books/45/reviews", "/users/{id}/books/{bookId}"); // false (extra segment)
+        boolean pathTest7 = RouteMatcher.match("/users/EMP123/books/45/reviews", "/users/{id}/books/{bookId}"); // false
+                                                                                                                // (extra
+                                                                                                                // segment)
         boolean pathTest8 = RouteMatcher.match("/products/99", "/products/{pid}"); // true
         boolean pathTest9 = RouteMatcher.match("/products/", "/products/{pid}"); // false (missing pid)
         boolean pathTest10 = RouteMatcher.match("/products", "/products/{pid}"); // false
@@ -30,7 +33,7 @@ public class RouteMatcherTest {
         boolean pathTest13 = RouteMatcher.match("/one/two", "/{first}/{second}/{third}"); // false (missing segment)
         boolean pathTest14 = RouteMatcher.match("/users/123/profile", "/users/{id}/profile"); // true
         boolean pathTest15 = RouteMatcher.match("/users/123/profile", "/users/{id}"); // false (extra segment)
-        
+
         assertTrue(pathTest1, "Path 1 Failed");
         assertTrue(pathTest2, "Path 2 Failed");
         assertTrue(pathTest3, "Path 3 Failed");
@@ -57,7 +60,8 @@ public class RouteMatcherTest {
                 "/users/{id}/books/{bookId}");
         assertEquals(Map.of("id", "EMP123", "bookId", "456"), paramsTest2);
 
-        HashMap<String, String> paramsTest3 = RouteMatcher.extractParams("/files/docs/report.pdf", "/files/{folder}/{filename}");
+        HashMap<String, String> paramsTest3 = RouteMatcher.extractParams("/files/docs/report.pdf",
+                "/files/{folder}/{filename}");
         System.out.println(paramsTest3);
         assertEquals(Map.of("folder", "docs", "filename", "report.pdf"), paramsTest3);
 
@@ -110,6 +114,29 @@ public class RouteMatcherTest {
 
         Map<String, String> q10 = RouteMatcher.extractQueryParams("/mix?abc=123&flag&x=y");
         assertEquals(Map.of("abc", "123", "flag", "", "x", "y"), q10); // key with no value
+    }
 
+    @Test
+    void testBothPathParamAndQueryParam() {
+        String pathPattern = "/users/{id}/";
+        String actualPath = "/users/EMP123/";
+        String fullUrl = "/users/EMP123/?active=true&sort=desc";
+
+        Map<String, String> pathParams = RouteMatcher.extractParams(actualPath, pathPattern);
+        Map<String, String> queryParams = RouteMatcher.extractQueryParams(fullUrl);
+
+        assertEquals(Map.of("id", "EMP123"), pathParams);
+        assertEquals(Map.of("active", "true", "sort", "desc"), queryParams);
+    }
+
+    @Test
+    void testRouteMatchingWithPathParamAndQueryParam() {
+        String routePath = "/users/{id}";
+        String pathParam = "/users/123";
+        String queryParam = "/users/123?id=456&name=Jhon";
+
+
+        assertTrue(RouteMatcher.match(pathParam, routePath));
+        assertTrue(RouteMatcher.match(queryParam, routePath));
     }
 }

@@ -14,5 +14,4 @@ public interface RequestHandler {
      *</ul>
      */
     void handleRequest(Request request , Response builder);
-
 }
