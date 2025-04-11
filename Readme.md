@@ -93,7 +93,7 @@ public static void main(String[] args) {
 - [x] Request/Response cycle
 - [x] Routing support 
 - [x] Middleware support
-- [ ] Support for path variable And Request Param
+- [x] Support for path variable And Request Param
 - [ ] Global Exception
 - [ ] Easier Response handlers
 - [ ] Default Database Integeration
