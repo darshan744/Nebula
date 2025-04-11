@@ -25,7 +25,14 @@ A minimal and lightweight Java-based HTTP framework built from scratch using Jav
 
 
 ## ⚙️ Getting Started
-
+ADD this in your pom.xml
+```
+<dependency>
+    <groupId>io.github.darshan744</groupId>
+    <artifactId>nebula</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 ### 🔧 How to Use
 
 In your `main` method, call `Nebula.start()` to start the server:
