@@ -15,6 +15,12 @@ This project adheres to [Semantic Versioning](https://semver.org).
 - [ ] Static file serving (HTML, CSS, JS)
 - [ ] File logger implementation
 
+### [1.0.1] - 2025-04-12
+### 🧩 ADDED
+- Path variable parsing (eg : `users/{id}`)
+- Query parameter parsing (eg : `users?id=123`)
+
+
 ---
 
 ## [1.0.0] - 2025-04-10
