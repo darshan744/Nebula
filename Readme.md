@@ -30,7 +30,7 @@ ADD this in your pom.xml
 <dependency>
     <groupId>io.github.darshan744</groupId>
     <artifactId>nebula</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 ### 🔧 How to Use
