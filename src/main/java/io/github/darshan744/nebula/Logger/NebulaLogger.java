@@ -6,4 +6,5 @@ public interface NebulaLogger {
     void info(String message);
     void config(String message);
     void fine(String message);
+    void userFileHandler(String fileName);
 }
