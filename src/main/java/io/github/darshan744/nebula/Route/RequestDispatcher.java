@@ -83,7 +83,7 @@ public class RequestDispatcher {
                 public String route = req.getUrl();
                 public String date = LocalDateTime.now().toString();
             };
-            res = res.serverError().json().addBody(errorObject);
+            res = res.serverError().json(errorObject);
             return res;
         }
     }

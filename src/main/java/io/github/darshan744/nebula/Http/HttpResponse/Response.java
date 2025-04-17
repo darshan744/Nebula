@@ -75,9 +75,9 @@ public final class Response {
 
     /**
      * Overloaded addHeader for ENUM as well as Custom headers
-     *  param header
-     *  param value
-     *  return
+     *  @param header
+     *  @param value
+     * @return this
      */
     public Response addHeader(Headers header, String value) {
         addHeader(header.getHeader(), value);
@@ -100,7 +100,7 @@ public final class Response {
     }
 
     /**
-     * Util method for default headers
+     * @apiNote Util method for default headers
      * Default headers that must be set in every response
      */
     private void defaultHeaders() {
@@ -110,7 +110,7 @@ public final class Response {
     }
 
     /**
-     * return new Status Line
+     * @return new Status Line
      * example HTTP/1.1 200 OK \r\n
      */
     private StringBuilder statusLineBuilder() {
@@ -124,7 +124,7 @@ public final class Response {
     }
     /**
      * Converts the whole Response Object to String and then convert it to Bytes
-     * return byte[] of the whole response 
+     * @return byte[] of the whole response 
      * throws JsonProcessingException when converting object to json 
      */
     public byte[] getBytes() throws JsonProcessingException {
@@ -146,34 +146,53 @@ public final class Response {
         return response.toString().getBytes(StandardCharsets.US_ASCII);
     }
 
-    /**
-     * Sets body type to JSON
-     * */
-    public Response json() {
+    private Response json() {
         setContentType(ContentType.JSON);
         return this;
     }
-
+    /**
+     * @param obj to set the body
+     * @return this
+     */
+    public Response json(Object obj) {
+        addBody(obj);
+        json();
+        return this;
+    }
+    /**
+     * sets content type text/html
+     * @return this
+     */
     public Response text() {
         setContentType(ContentType.HTML);
         return this;
     }
     /**
      * Helpers for setting status code
-     *  return
+     * @return this
      */
     public Response ok() {
         return setStatusCode(HttpStatus.OK);
     }
-
+    /**
+     * sets status code 404
+     * @return this
+     */
     public Response notFound() {
         return setStatusCode(HttpStatus.NOT_FOUND);
     }
-
+    /**
+     * sets status code 500
+     * @return this
+     */
     public Response serverError() {
         return setStatusCode(HttpStatus.SERVER_ERROR);
     }
 
+    /**
+     * sets status code 401
+     * @return this
+     */
     public Response unAuthorized() {
         setStatus(HttpStatus.UNAUTHORIZED);
         return this;
