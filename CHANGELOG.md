@@ -11,9 +11,9 @@ This project adheres to [Semantic Versioning](https://semver.org).
 - [ ] Global Exception Handling system
 - [x] Support for path variables (e.g. `/users/{id}`)
 - [x] Request parameter parsing (`?key=value`)
-- [ ] Shortcut method for sending JSON response (e.g., `res.json(obj)`)
+- [x] Shortcut method for sending JSON response (e.g., `res.json(obj)`)
 - [ ] Static file serving (HTML, CSS, JS)
-- [ ] File logger implementation
+- [x] File logger implementation
 
 ### [1.0.1] - 2025-04-12
 ### 🧩 ADDED
