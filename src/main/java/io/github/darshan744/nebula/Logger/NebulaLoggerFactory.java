@@ -4,7 +4,6 @@ import io.github.darshan744.nebula.Logger.LoggerImpl.*;;
 
 /**
  * Logger factory for NebulaLogger
- * 
  */
 public class NebulaLoggerFactory {
     

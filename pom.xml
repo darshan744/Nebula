@@ -24,8 +24,6 @@
             <email>darshankumaravelk@gmail.com</email>
         </developer>
     </developers>
-
-
     <scm>
         <connection>scm:git:git://github.com/darshan744/Nebula.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:darshan744/Nebula.git</developerConnection>
