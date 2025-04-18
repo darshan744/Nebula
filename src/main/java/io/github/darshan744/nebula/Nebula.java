@@ -32,7 +32,6 @@ public class Nebula {
             // setting up configurations ex : configuring built-in support for DB
             Nebula.port = port;
             ServerListener serverListener = new ServerListener(port);
-            Nebula.port = port;
             // starts the thread;
             serverListener.start();
         } catch (IOException e) {
@@ -40,15 +39,12 @@ public class Nebula {
         }
     }
     private static void configureApplication() {
-        logger.config("Configuring Application");
         configureMiddleware();
     }
     //configures default middlewares
     private static void configureMiddleware() {
-        logger.config("Registering Default Middlewares");
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         LoggerMiddlware loggerMiddlware = new LoggerMiddlware();
         registry.registerMiddleware(loggerMiddlware);
-        System.out.println(registry.getMiddlewares());
     }
 }

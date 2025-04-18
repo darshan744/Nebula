@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.darshan744.nebula.Http.Constants.HttpMethod;
 import io.github.darshan744.nebula.Http.Constants.HttpStatus;
 import io.github.darshan744.nebula.Http.Constants.HttpVersion;
+import io.github.darshan744.nebula.Http.HttpRequest.Exceptions.BodyParsingException;
 import io.github.darshan744.nebula.Http.HttpRequest.Parser.NebulaJsonParser;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
@@ -114,8 +115,7 @@ public class Request {
         try {
             return jsonParser.getObjectOfTheBody(getBody(), clazz);
         } catch (JsonProcessingException e) {
-            logger.severe(e.getMessage());
-            return null;
+            throw new BodyParsingException("Failed To parse Request Body with CLASS: "+clazz.getSimpleName() , e);
         }
     }
 

@@ -38,7 +38,7 @@ public class HttpParser {
     private final int SP = 32; // space
     private final NebulaLogger logger = NebulaLoggerFactory.getLogger(HttpParser.class);
 
-    public Request parseHttpRequest(InputStream requestInputStream) {
+    public Request parseHttpRequest(InputStream requestInputStream) throws HttpParserException {
         Request request = new Request();
         try {
             parseHttpRequestLine(requestInputStream, request);
@@ -52,6 +52,7 @@ public class HttpParser {
             }
         } catch (HttpParserException httpParserException) {
             logger.severe(httpParserException.getMessage());
+            throw new HttpParserException(httpParserException.getMessage(), httpParserException.getErrorCode());
         } catch (IOException ioException) {
             logger.severe(ioException.getMessage());
         }
@@ -124,9 +125,7 @@ public class HttpParser {
         List<Byte> bytes = new ArrayList<>();
         int rawInt = 0;
         int i = 0;
-        System.out.println(contentLength);
-        logger.info("Going inside loop");
-        while (i < contentLength) {
+       while (i < contentLength) {
             rawInt = requestInputStream.read();
             if(rawInt == -1) break;
             byte b = (byte) rawInt;  // Cast here only if valid

@@ -37,7 +37,7 @@ public class MiddlewareRegistry {
     public void setGlobalExceptionHandler(ExceptionHandler handler) {
         this.handler = handler;
     }
-    private void handleException(Exception e , Request req , Response res){
+    public void handleException(Exception e , Request req , Response res){
         this.handler.handleException(e, req, res);
     }
 }

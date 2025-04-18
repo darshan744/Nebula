@@ -1,11 +1,11 @@
 package io.github.darshan744.nebula.Route;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
 import io.github.darshan744.nebula.Http.HttpRequest.Request;
+import io.github.darshan744.nebula.Http.HttpRequest.Exceptions.HttpParserException;
 import io.github.darshan744.nebula.Http.HttpRequest.Parser.HttpParser;
 import io.github.darshan744.nebula.Http.HttpResponse.Response;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
@@ -48,8 +48,7 @@ public class RequestDispatcher {
      * Takes the incoming stream parses it passes through middlewares passed to
      * handler
      * Gets serialized and then written with outputstream
-     * param ioInputStream
-     * return
+     * @param ioInputStream the input stream of the http 
      */
     public Response handleRequest(InputStream ioInputStream) {
         // parser for inputStream
@@ -57,36 +56,30 @@ public class RequestDispatcher {
         
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         
-        Request req = parser.parseHttpRequest(ioInputStream);
-        
-        Response res = new Response();
-        
-        MiddlewareChain chain = new MiddlewareChain(registry.getMiddlewares());
         try {
-           RouteDefinition matchedRoute = pathResolver(req);
-
-            chain.next(req, res, chain);
-
-            setParamsToRequest(req, matchedRoute);
+            Request req = parser.parseHttpRequest(ioInputStream);
             
-            matchedRoute.call(req, res);
+            Response res = new Response();
+            
+            MiddlewareChain chain = new MiddlewareChain(registry.getMiddlewares());
+            try {
+               RouteDefinition matchedRoute = pathResolver(req);
 
-            return res;
-        } catch (RouteNotFoundException routeNotFoundException) {
-            // The Jackson serializes only the public fields
-            // So we the error must be public not default
-            logger.severe(routeNotFoundException.getMessage());
-            Object errorObject = new Object() {
-                public String error = routeNotFoundException.getErrorCode();
-                public String description = routeNotFoundException.getMessage();
-                public String httpMethod = req.getMethod().toString();
-                public String route = req.getUrl();
-                public String date = LocalDateTime.now().toString();
-            };
-            res = res.serverError().json(errorObject);
-            return res;
+                chain.next(req, res, chain);
+
+                setParamsToRequest(req, matchedRoute);
+                
+                matchedRoute.call(req, res);
+
+                return res;
+            } catch (RouteNotFoundException routeNotFoundException) {
+                // global handler
+                registry.handleException(routeNotFoundException, req, res);
+                return res;
+            }
+        }catch(HttpParserException httpParserException) {
+            return new Response().serverError().json(httpParserException);
         }
+        
     }
-
-
 }

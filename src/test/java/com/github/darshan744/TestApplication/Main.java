@@ -10,8 +10,8 @@ public class Main {
         UserController controller = new UserController();
         Router router = Router.getRouter();
         //test for param
-        router.registerRoute(HttpMethod.POST, "/users/{id}", controller);
+        router.registerRoute(HttpMethod.POST, "/users/{id}", controller::handleRequest);
         //test for queryparam
-        router.registerRoute(HttpMethod.GET, "/users", new GetUser());
+        router.registerRoute(HttpMethod.GET, "/users", (new GetUser())::handleRequest);
     }
 }
