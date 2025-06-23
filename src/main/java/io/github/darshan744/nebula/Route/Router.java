@@ -5,6 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.darshan744.nebula.Http.Constants.HttpMethod;
+
+/**
+ * Router
+ * 
+ * @description This is the router Class that manages and handles
+ *              the endpoint registration with the method corressponding to it
+ */
 public class Router {
 
     private static Router router = null;
@@ -14,23 +21,26 @@ public class Router {
      * EX : {GET : [RouteDefinition]}
      */
     private HashMap<HttpMethod, List<RouteDefinition>> routes = new HashMap<>();
-    
-    public void registerRoute(HttpMethod method , String path , RequestHandler requestHandler) {
-       List<RouteDefinition> route = routes.getOrDefault(method , new ArrayList<>());
-       route.add(new RouteDefinition(method , path , requestHandler));
-       routes.put(method, route);
+
+    public void registerRoute(HttpMethod method, String path, RequestHandler requestHandler) {
+        List<RouteDefinition> route = routes.getOrDefault(method, new ArrayList<>());
+        route.add(new RouteDefinition(method, path, requestHandler));
+        routes.put(method, route);
     }
 
     public List<RouteDefinition> getMethodRoutes(HttpMethod method) {
         return routes.get(method);
     }
 
-    private Router() {}
+    private Router() {
+    }
+
     /**
      * Router constructor for singleton class
      */
     public static synchronized Router getRouter() {
-        if(router == null) router = new Router();
+        if (router == null)
+            router = new Router();
         return router;
     }
 }
