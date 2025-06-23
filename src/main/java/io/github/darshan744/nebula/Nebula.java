@@ -48,5 +48,21 @@ public class Nebula {
     private static void configureMiddleware() {
         logger.config("Registering Default Middlewares");
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
+        System.out.println(registry.getMiddlewares());
+    }
+
+    public void get() {
+    }
+
+    public void post() {
+    }
+
+    public void put() {
+    }
+
+    public void delete() {
+    }
+
+    public void use() {
     }
 }
