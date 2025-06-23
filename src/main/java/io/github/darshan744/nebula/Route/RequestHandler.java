@@ -10,8 +10,9 @@ public interface RequestHandler {
      * <ul>
      * <li>This method helps in hanlding request</li>
      * <li>The response to be sent can be built via builder</li>
-     * <li>The Nebula will handle creating response object serialization and sending</li>
-     *</ul>
+     * <li>The Nebula will handle creating response object serialization and
+     * sending</li>
+     * </ul>
      */
-    void handleRequest(Request request , Response builder);
+    void handleRequest(Request request, Response response);
 }
