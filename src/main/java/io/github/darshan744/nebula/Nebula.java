@@ -12,23 +12,22 @@ import io.github.darshan744.nebula.Route.Router;
 import io.github.darshan744.nebula.Server.ServerListener;
 
 public class Nebula {
-    private static final NebulaLogger logger = NebulaLoggerFactory.getLogger(Nebula.class);
+    private final NebulaLogger logger = NebulaLoggerFactory.getLogger(Nebula.class);
     private static Integer port = null;
-    private Router router = Router.getRouter();
-    private HttpMethod GET = HttpMethod.GET;
-    private HttpMethod POST = HttpMethod.POST;
-    private HttpMethod PUT = HttpMethod.PUT;
-    private HttpMethod DELETE = HttpMethod.DELETE;
-    private MiddlewareRegistry middlewareRegistry = MiddlewareRegistry.getRegistry();
-
-    public static void start() {
+    private final Router router = Router.getRouter();
+    private final HttpMethod GET = HttpMethod.GET;
+    private final HttpMethod POST = HttpMethod.POST;
+    private final HttpMethod PUT = HttpMethod.PUT;
+    private final HttpMethod DELETE = HttpMethod.DELETE;
+    private final MiddlewareRegistry middlewareRegistry = MiddlewareRegistry.getRegistry();
+    public void start() {
         start(7090);
     }
 
     /**
      * @param port to listen on
      */
-    public static void start(int port) {
+    public void start(int port) {
         // if already started the server
         // throw error
         // TODO : Have multiple instance support for Servers
@@ -47,14 +46,14 @@ public class Nebula {
         }
     }
 
-    private static void configureApplication() {
+    private void configureApplication() {
         logger.config("Configuring Application");
         configureMiddleware();
         // Other configuration methods goes here
     }
 
     // configures default middlewares
-    private static void configureMiddleware() {
+    private void configureMiddleware() {
         logger.config("Registering Default Middlewares");
         MiddlewareRegistry registry = MiddlewareRegistry.getRegistry();
         System.out.println(registry.getMiddlewares());

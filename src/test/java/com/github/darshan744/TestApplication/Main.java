@@ -6,12 +6,10 @@ import io.github.darshan744.nebula.Route.Router;
 
 public class Main {
     public static void main(String[] args) {
-        Nebula.start();
+        Nebula server = new Nebula();
         UserController controller = new UserController();
-        Router router = Router.getRouter();
-        //test for param
-        router.registerRoute(HttpMethod.POST, "/users/{id}", controller);
-        //test for queryparam
-        router.registerRoute(HttpMethod.GET, "/users", new GetUser());
+        server.start();
+        server.get("/users", controller::handleRequest);
+
     }
 }
