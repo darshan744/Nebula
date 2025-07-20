@@ -11,7 +11,6 @@ import io.github.darshan744.nebula.Http.HttpResponse.Response;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
 import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 import io.github.darshan744.nebula.Middleware.core.MiddlewareRegistry;
-import io.github.darshan744.nebula.Route.Exception.RouteNotFoundException;
 import io.github.darshan744.nebula.Middleware.core.Middleware;
 
 /**
@@ -47,7 +46,7 @@ public class RequestDispatcher {
      * Takes the incoming stream parses it passes through middlewares passed to
      * handler
      * Gets serialized and then written with outputstream
-     * 
+     *
      * @param ioInputStream
      * @returns the response to be sent
      */
@@ -69,10 +68,9 @@ public class RequestDispatcher {
             // run the middlewares registered
             handleRequest(req, res, middlewares, 0, matchedRoute);
             // run the registered method for the api endpoint
-            if (true) {
-            }
             matchedRoute.call(req, res);
             // return the constructed response
+            System.out.println(req.getUrl());
             return res;
         } catch (RouteNotFoundException routeNotFoundException) {
             // The Jackson serializes only the public fields

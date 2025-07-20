@@ -19,7 +19,7 @@ import io.github.darshan744.nebula.Route.RequestDispatcher;
  */
 public class HttpWorkerThread extends Thread{
     private Socket socket = null;
-    HttpWorkerThread(Socket socket) {
+    public HttpWorkerThread(Socket socket) {
         this.socket = socket;
     }
     @Override
@@ -36,7 +36,7 @@ public class HttpWorkerThread extends Thread{
                 RequestDispatcher dispatcher = new RequestDispatcher();
                 //converts stream to Request Object and handle the registered url
                 Response res = dispatcher.handleRequest(ioInputStream);
-                // to send our recieved resposne
+                // to send our received response
                 byte[] bytes = res.getBytes();
                 outputStream.write(bytes);
             } catch (Exception e) {
@@ -46,7 +46,7 @@ public class HttpWorkerThread extends Thread{
                     public String timeStamp = LocalDateTime.now().toString();
                 };
                 
-                Response res = new Response().setStatusCode(HttpStatus.SERVER_ERROR).addBody(obj);
+                Response res = new Response().serverError().json(obj);
                 outputStream.write(res.getBytes());
             }
         } catch (IOException e) {

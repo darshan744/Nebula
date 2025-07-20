@@ -1,4 +1,4 @@
-package io.github.darshan744.nebula.Route.Exception;
+package io.github.darshan744.nebula.Route;
 
 public class RouteNotFoundException extends RuntimeException{
     private String errorCode;

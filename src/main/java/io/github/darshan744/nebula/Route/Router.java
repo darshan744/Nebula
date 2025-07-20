@@ -20,7 +20,7 @@ public class Router {
      * This stores With HTTP Method as a Key and their routes and Handler as value
      * EX : {GET : [RouteDefinition]}
      */
-    private HashMap<HttpMethod, List<RouteDefinition>> routes = new HashMap<>();
+    private final HashMap<HttpMethod, List<RouteDefinition>> routes = new HashMap<>();
 
     public void registerRoute(HttpMethod method, String path, RequestHandler requestHandler) {
         List<RouteDefinition> route = routes.getOrDefault(method, new ArrayList<>());

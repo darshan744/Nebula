@@ -1,6 +1,8 @@
 package io.github.darshan744.nebula;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import io.github.darshan744.nebula.Http.Constants.HttpMethod;
 import io.github.darshan744.nebula.Logger.NebulaLogger;
@@ -9,7 +11,7 @@ import io.github.darshan744.nebula.Middleware.core.Middleware;
 import io.github.darshan744.nebula.Middleware.core.MiddlewareRegistry;
 import io.github.darshan744.nebula.Route.RequestHandler;
 import io.github.darshan744.nebula.Route.Router;
-import io.github.darshan744.nebula.Server.ServerListener;
+import io.github.darshan744.nebula.Server.HttpWorkerThread;
 
 public class Nebula {
     private final NebulaLogger logger = NebulaLoggerFactory.getLogger(Nebula.class);
@@ -20,6 +22,7 @@ public class Nebula {
     private final HttpMethod PUT = HttpMethod.PUT;
     private final HttpMethod DELETE = HttpMethod.DELETE;
     private final MiddlewareRegistry middlewareRegistry = MiddlewareRegistry.getRegistry();
+    private ServerSocket serverSocket = null;
     public void start() {
         start(7090);
     }
@@ -36,20 +39,36 @@ public class Nebula {
             return;
         }
         try {
-            configureApplication();
-            ServerListener serverListener = new ServerListener(port);
-            Nebula.port = port;
-            // starts the thread;
-            serverListener.start();
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            logger.severe(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        configureApplication();
+            Nebula.port = port;
+            handleIncomingRequest();
+            logger.info("Nebula stopped");
+            logger.info("Exiting server");
+    }
+    private void handleIncomingRequest() {
+        Socket socket = null;
+        while(serverSocket.isBound() && !serverSocket.isClosed()) {
+            try {
+                // waits for new incoming request
+                socket = serverSocket.accept();
+                System.out.println(socket);
+                //after incoming request we get a separate socket for that request
+                logger.info("Connection Received : " + socket.getLocalAddress());
+                //using threads we can manage the new incoming socket
+                HttpWorkerThread httpWorkerThread = new HttpWorkerThread(socket);
+                httpWorkerThread.start();
+            } catch (IOException e) {
+                logger.severe(e.getMessage());
+            }
         }
     }
-
     private void configureApplication() {
         logger.config("Configuring Application");
         configureMiddleware();
-        // Other configuration methods goes here
     }
 
     // configures default middlewares

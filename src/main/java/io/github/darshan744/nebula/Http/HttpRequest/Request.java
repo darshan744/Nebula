@@ -115,7 +115,10 @@ public class Request {
      */
     public <T> T getBody(Class<T> clazz) {
         try {
-            return jsonParser.getObjectOfTheBody(getBody(), clazz);
+            if (body == null) {
+                return null;
+            }
+            return jsonParser.getObjectOfTheBody(body, clazz);
         } catch (JsonProcessingException e) {
             logger.severe(e.getMessage());
             return null;

@@ -50,10 +50,8 @@ public class HttpParser {
                     parseHttpBody(requestInputStream, request, contentLength);
                 }
             }
-        } catch (HttpParserException httpParserException) {
+        } catch (HttpParserException | IOException httpParserException) {
             logger.severe(httpParserException.getMessage());
-        } catch (IOException ioException) {
-            logger.severe(ioException.getMessage());
         }
         return request;
     }
@@ -79,9 +77,6 @@ public class HttpParser {
                     }
                 }
             }
-        }
-        if (parts.size() != 3) {
-            throw new RequestLineParserException("Invalid Request Line");
         }
         resolveHttpVersion(parts.getLast(), request);
         request.setUrl(parts.get(1));

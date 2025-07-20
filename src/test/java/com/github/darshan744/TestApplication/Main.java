@@ -8,8 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Nebula server = new Nebula();
         UserController controller = new UserController();
+        server.get("/users", controller);
         server.start();
-        server.get("/users", controller::handleRequest);
-
     }
 }
