@@ -14,29 +14,30 @@ import io.github.darshan744.nebula.Logger.NebulaLoggerFactory;
 
 /**
  * REQUEST BODY FOR HTTP
- * Contains HTTP Method HTTP Version  Route Body  Headers (As map) 
+ * Contains HTTP Method HTTP Version Route Body Headers (As map)
  */
 public class Request {
-   
+
     private final NebulaJsonParser jsonParser = new NebulaJsonParser();
     private final NebulaLogger logger = NebulaLoggerFactory.getLogger(Request.class);
-    
+
     private String body;
     private HttpMethod method;
     private HttpStatus status;
     private String url;
     private HttpVersion httpVersion;
-    private HashMap<String , String> headers;
-    private HashMap<String ,String> params;
-    private HashMap<String , String> queryParams;
-    
+    private HashMap<String, String> headers;
+    private HashMap<String, String> params;
+    private HashMap<String, String> queryParams;
+
     public void setParams(HashMap<String, String> params) {
         this.params = params;
     }
-    
+
     public void setQueryParams(HashMap<String, String> queryParams) {
         this.queryParams = queryParams;
     }
+
     /**
      * Returns the param stored from the URL
      */
@@ -56,6 +57,7 @@ public class Request {
         queryParams = new HashMap<>();
         this.headers = new LinkedHashMap<>();
     }
+
     public HttpVersion getHttpVersion() {
         return httpVersion;
     }
@@ -68,7 +70,7 @@ public class Request {
         return method;
     }
 
-    public  void setMethod(HttpMethod method) {
+    public void setMethod(HttpMethod method) {
         this.method = method;
     }
 
@@ -91,15 +93,16 @@ public class Request {
     public HashMap<String, String> getHeaders() {
         return headers;
     }
+
     public void setHeaders(HashMap<String, String> headers) {
         this.headers = headers;
     }
 
-    public void putInHeaders(String key , String value) {
-        if(key.isEmpty() || value.isEmpty()) {
+    public void putInHeaders(String key, String value) {
+        if (key.isEmpty() || value.isEmpty()) {
             return;
         }
-        this.headers.put(key.toLowerCase() , value);
+        this.headers.put(key.toLowerCase(), value);
     }
 
     public String getBody() {
@@ -107,8 +110,8 @@ public class Request {
     }
 
     /**
-     *  param clazz mapp object to that class
-     *  return either the parsed object or null if error occured;
+     * param clazz mapp object to that class
+     * return either the parsed object or null if error occured;
      */
     public <T> T getBody(Class<T> clazz) {
         try {
@@ -126,7 +129,7 @@ public class Request {
     public String getHeader(String header) {
         return this.headers.get(header.toLowerCase());
     }
-    
+
     @Override
     public String toString() {
         return "Request{" +
@@ -137,5 +140,5 @@ public class Request {
                 "\nheaders=" + headers +
                 '}';
     }
-    
+
 }

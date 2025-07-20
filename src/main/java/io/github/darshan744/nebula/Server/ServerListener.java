@@ -13,7 +13,7 @@ public class ServerListener extends Thread {
     //listening port
     private int port;
     // listens to the incoming connections
-    private ServerSocket serverSocket = null;
+   private ServerSocket serverSocket = null;
    public ServerListener(int port) throws IOException {
         this.port = port;
         this.serverSocket = new ServerSocket(port);

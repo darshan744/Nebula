@@ -3,5 +3,11 @@ target/
 .vscode/
 logs/
 .settings/
+<<<<<<< HEAD
+=======
+logs/
+.classpath/
+.project/
+>>>>>>> feat-helperfunctions
 .classpath
 .project

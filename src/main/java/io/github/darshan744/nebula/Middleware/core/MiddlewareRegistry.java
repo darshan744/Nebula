@@ -1,9 +1,8 @@
-package io.github.darshan744.nebula.Middleware.Handler;
+package io.github.darshan744.nebula.Middleware.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.darshan744.nebula.Middleware.Middleware;
 
 public class MiddlewareRegistry {
 
@@ -21,4 +20,5 @@ public class MiddlewareRegistry {
     }
     public void registerMiddleware(Middleware middleware) {middlewares.add(middleware);}
     public List<Middleware> getMiddlewares(){return middlewares;}
+    
 }

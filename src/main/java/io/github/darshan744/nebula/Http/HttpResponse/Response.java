@@ -20,11 +20,13 @@ public final class Response {
     private Object contentBody = null;
     private String serializedBody = null;
     private final NebulaJsonParser jsonParser = new NebulaJsonParser();
+    private boolean closed = false;
 
-    public Response(){
+    public Response() {
         ok();
         defaultHeaders();
     }
+
     /**
      * return HashMap of Headers
      */
@@ -41,9 +43,9 @@ public final class Response {
     }
 
     /**
-     *  param contentBody - Object of the body
-     *  return the number of bytes of the characters (Charset-US_ASCII)
-     *  throws JsonProcessingException
+     * @param contentBody - Object of the body
+     * @return the number of bytes of the characters (Charset-US_ASCII)
+     * @throws JsonProcessingException
      */
     private int setContentBody(Object contentBody) throws JsonProcessingException {
         serializedBody = jsonParser.serializeObject(contentBody);
@@ -75,8 +77,9 @@ public final class Response {
 
     /**
      * Overloaded addHeader for ENUM as well as Custom headers
-     *  @param header
-     *  @param value
+     * 
+     * @param header
+     * @param value
      * @return this
      */
     public Response addHeader(Headers header, String value) {
@@ -89,10 +92,10 @@ public final class Response {
         return this;
     }
 
-    public Response addBody(Object body){
+    public Response addBody(Object body) {
         try {
-           int contentLength = setContentBody(body);
-           addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
+            int contentLength = setContentBody(body);
+            addHeader(Headers.CONTENT_LENGTH, String.valueOf(contentLength));
         } catch (JsonProcessingException e) {
             logger.severe(e.getMessage());
         }
@@ -101,7 +104,7 @@ public final class Response {
 
     /**
      * @apiNote Util method for default headers
-     * Default headers that must be set in every response
+     *          Default headers that must be set in every response
      */
     private void defaultHeaders() {
         addHeader(Headers.CONTENT_TYPE, ContentType.JSON.getContentType());
@@ -111,10 +114,10 @@ public final class Response {
 
     /**
      * @return new Status Line
-     * example HTTP/1.1 200 OK \r\n
+     *         example HTTP/1.1 200 OK \r\n
      */
     private StringBuilder statusLineBuilder() {
-       return new StringBuilder()
+        return new StringBuilder()
                 .append(HttpVersion.V1.getVersion())
                 .append(" ")
                 .append(getStatus().getStatusCode())
@@ -122,25 +125,26 @@ public final class Response {
                 .append(getStatus().getMessage())
                 .append(CRLF);
     }
+
     /**
      * Converts the whole Response Object to String and then convert it to Bytes
-     * @return byte[] of the whole response 
-     * throws JsonProcessingException when converting object to json 
+     * 
+     * @return byte[] of the whole response
+     *         throws JsonProcessingException when converting object to json
      */
     public byte[] getBytes() throws JsonProcessingException {
-       
+
         StringBuilder statusLine = statusLineBuilder();
-        
-        // Headers as a string 
+
+        // Headers as a string
         StringBuilder headers = new StringBuilder();
         getHeaders().forEach(
-            (key , value) -> headers.append(key).append(": ").append(value).append(CRLF)
-        );
+                (key, value) -> headers.append(key).append(": ").append(value).append(CRLF));
         headers.append(CRLF);
         StringBuilder response = new StringBuilder();
         response.append(statusLine).append(headers);
-        if(serializedBody != null) {
-           response.append(serializedBody);
+        if (serializedBody != null) {
+            response.append(serializedBody);
         }
         response.append(CRLF);
         return response.toString().getBytes(StandardCharsets.US_ASCII);
@@ -150,6 +154,7 @@ public final class Response {
         setContentType(ContentType.JSON);
         return this;
     }
+
     /**
      * @param obj to set the body
      * @return this
@@ -159,30 +164,38 @@ public final class Response {
         json();
         return this;
     }
+
     /**
      * sets content type text/html
+     * 
      * @return this
      */
     public Response text() {
         setContentType(ContentType.HTML);
         return this;
     }
+
     /**
      * Helpers for setting status code
+     * 
      * @return this
      */
     public Response ok() {
         return setStatusCode(HttpStatus.OK);
     }
+
     /**
      * sets status code 404
+     * 
      * @return this
      */
     public Response notFound() {
         return setStatusCode(HttpStatus.NOT_FOUND);
     }
+
     /**
      * sets status code 500
+     * 
      * @return this
      */
     public Response serverError() {
@@ -191,11 +204,20 @@ public final class Response {
 
     /**
      * sets status code 401
+     * 
      * @return this
      */
     public Response unAuthorized() {
         setStatus(HttpStatus.UNAUTHORIZED);
         return this;
     }
-    
+
+    public void close() {
+        this.closed = true;
+    }
+
+    public boolean isClosed() {
+        return this.closed;
+    }
+
 }
